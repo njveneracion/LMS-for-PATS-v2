@@ -22,11 +22,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     if ($connect->query($sql) === TRUE) {
-        echo "<div class='alert alert-success alert-dismissible fade show container' role='alert'>Record updated successfully!
+        echo "<div class='alert alert-success alert-dismissible fade show container' role='alert'>Logo updated successfully!
             <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
         </div>";
     } else {
-        echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>Error updating record: " . $connect->error . "
+        echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>Error updating logo: " . $connect->error . "
             <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
         </div>";
     }
