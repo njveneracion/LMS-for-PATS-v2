@@ -47,7 +47,7 @@ while ($row = mysqli_fetch_assoc($resultSearch)) {
         <td><?php echo htmlspecialchars($fullname); ?></td>
         <td>
             <?php if ($profilePicture) { ?>
-                <img src="../assets/userProfilePicture/<?php echo htmlspecialchars($profilePicture); ?>" alt="Profile Picture" class="img-thumbnail" style="width: 100px;">
+                <img src="../uploads/profile-pictures/<?php echo htmlspecialchars($profilePicture)?>" alt="Profile Picture" class="img-thumbnail" style="width: 100px;">
             <?php } else { ?>
                 <img src="../assets/userProfilePicture/default.jpg" alt="Default Profile Picture" class="img-thumbnail" style="width: 100px;">
             <?php } ?>
@@ -87,7 +87,7 @@ while ($row = mysqli_fetch_assoc($resultSearch)) {
         </td>
         <td><?php echo htmlspecialchars($courseName); ?></td>
         <td>
-            <a href="verify-registrations.php?id=<?= $id; ?>&courseID=<?= $courseID; ?>" class="btn btn-success btn-sm">View Registration</a>
+            <a href="registrations.php?id=<?= $id; ?>&courseID=<?= $courseID; ?>" class="btn btn-success btn-sm">View Registration</a>
         </td>
     </tr>
 

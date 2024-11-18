@@ -1,3 +1,4 @@
+
 <?php
 include '../config/db.php';
 
@@ -36,35 +37,6 @@ if ($courseID === '') {
 
 $studentsResult = mysqli_query($connect, $studentsQuery);
 
-// Handle form submission to generate report
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['generate_report'])) {
-    $courseID = mysqli_real_escape_string($connect, $_POST['courseID']);
-    $studentsQuery = "
-        SELECT u.user_id, u.fullname, u.profile_picture, cr.status, c.course_name
-        FROM users u
-        JOIN course_registrations cr ON u.user_id = cr.student_id
-        JOIN courses c ON cr.course_id = c.course_id
-        WHERE cr.course_id = ?
-    ";
-    $stmt = mysqli_prepare($connect, $studentsQuery);
-    mysqli_stmt_bind_param($stmt, "i", $courseID);
-    mysqli_stmt_execute($stmt);
-    $studentsResult = mysqli_stmt_get_result($stmt);
-
-    // Generate CSV report
-    if (isset($_POST['download_csv'])) {
-        header('Content-Type: text/csv');
-        header('Content-Disposition: attachment;filename=students_report.csv');
-        $output = fopen('php://output', 'w');
-        fputcsv($output, array('User ID', 'Name', 'Profile Picture', 'Registration Status', 'Course Name'));
-        while ($row = mysqli_fetch_assoc($studentsResult)) {
-            fputcsv($output, $row);
-        }
-        fclose($output);
-        exit;
-    }
-}
-
 if (isset($_POST['generate_certificate'])) {
     $courseID = mysqli_real_escape_string($connect, $_POST['courseID']);
     $studentID = mysqli_real_escape_string($connect, $_POST['studentID']);
@@ -99,24 +71,17 @@ if (isset($_POST['generate_certificate'])) {
         <div class="col-md-4 mb-3">
             <div class="card h-100 border-primary">
                 <div class="card-header bg-primary text-white">
-                    <h4 class="card-title fw-bold mb-0">Generate Report</h4>
+                    <h4 class="card-title fw-bold mb-0">Select a Course</h4>
                 </div>
                 <div class="card-body">
-                    <form method="post" action="students.php">
-                        <div class="mb-3">
-                            <label for="courseID" class="form-label">Select Course</label>
-                            <select id="courseID" name="courseID" class="form-select" required>
-                                <option value="" disabled selected>Choose a course</option>
-                                <?php while ($course = mysqli_fetch_assoc($coursesResult)) { ?>
-                                    <option value="<?php echo htmlspecialchars($course['course_id']); ?>">
-                                        <?php echo htmlspecialchars($course['course_name']); ?>
-                                    </option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                        <button type="submit" name="generate_report" class="btn btn-primary">Generate Report</button>
-                        <button type="submit" name="download_csv" class="btn btn-secondary">Download CSV</button>
-                    </form>
+                    <select id="courseDropdown" class="form-select">
+                        <?php while ($course = mysqli_fetch_assoc($coursesResult)) { ?>
+                            <option value="<?php echo htmlspecialchars($course['course_id']); ?>"
+                                <?php echo ($course['course_id'] == $courseID) ? 'selected' : ''; ?>>
+                                <?php echo htmlspecialchars($course['course_name']); ?>
+                            </option>
+                        <?php } ?>
+                    </select>
                 </div>
             </div>
         </div>
@@ -126,42 +91,10 @@ if (isset($_POST['generate_certificate'])) {
                     <h4 class="card-title fw-bold mb-0">List of Students</h4>
                 </div>
                 <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead class="table-primary">
-                                <tr>
-                                    <th>User ID</th>
-                                    <th>Name</th>
-                                    <th>Profile Picture</th>
-                                    <th>Registration Status</th>
-                                    <th>Course Name</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php if (isset($studentsResult)) {
-                                    while ($student = mysqli_fetch_assoc($studentsResult)) { ?>
-                                        <tr>
-                                            <td><?php echo htmlspecialchars($student['user_id']); ?></td>
-                                            <td><?php echo htmlspecialchars($student['fullname']); ?></td>
-                                            <td><img src="<?php echo htmlspecialchars($student['profile_picture']); ?>" alt="Profile Picture" width="50"></td>
-                                            <td><?php echo htmlspecialchars($student['status']); ?></td>
-                                            <td><?php echo htmlspecialchars($student['course_name']); ?></td>
-                                        </tr>
-                                    <?php }
-                                } else { ?>
-                                    <tr>
-                                        <td colspan="5" class="text-center">Select a course to generate the report.</td>
-                                    </tr>
-                                <?php } ?>
-                            </tbody>
-                        </table>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text bg-primary text-white"><i class="fas fa-search"></i></span>
+                        <input id="searchInput" type="text" class="form-control" placeholder="Search students">
                     </div>
-                    <?php
-                    if (isset($_SESSION['registration_success'])) {
-                        echo '<div id="success-alert" class="alert alert-success mt-3" role="alert">' . $_SESSION['registration_success'] . '</div>';
-                        unset($_SESSION['registration_success']);
-                    }
-                    ?>
                 </div>
             </div>
         </div>
@@ -240,6 +173,7 @@ if (isset($_POST['generate_certificate'])) {
                             ) AS all_items ON all_items.course_id = e.course_id
                             LEFT JOIN (
                                 SELECT DISTINCT content_id, content_type, is_completed, student_id, course_id
+                                FROM student_progress
                             ) sp ON all_items.id = sp.content_id 
                                 AND sp.content_type = all_items.type 
                                 AND sp.student_id = e.user_id 
@@ -305,7 +239,6 @@ if (isset($_POST['generate_certificate'])) {
                         // Don't forget to close the prepared statement after the loop
                         mysqli_stmt_close($stmtCertStatus);
                         ?>
-
 
                         
                     </tbody>
