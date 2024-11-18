@@ -1,0 +1,65 @@
+:root {
+/* Primary colors */
+/* use var(--colorVar: color;) to call it.*/
+--primary-color: #0f6fc5;
+--secondary-color: #6c757d;
+--success-color: #28a745;
+--danger-color: #dc3545;
+--warning-color: #ffc107;
+--info-color: #17a2b8;
+--light-color: #f8f9fa;
+--dark-color: #343a40;
+
+/* Text colors */
+--text-primary: #212529;
+--text-secondary: #6c757d;
+--text-light: #f8f9fa;
+
+/* Background colors */
+--bg-primary: #ffffff;
+--bg-secondary: #f8f9fa;
+
+/* Border colors */
+--border-color: #dee2e6;
+
+/* Additional custom colors */
+--accent-color: #fd7e14;
+--highlight-color: #20c997;
+}
+
+.button-primary {
+background-color: var(--primary-color) !important;
+color: var(--text-light) !important;
+transition: all 0.3s ease !important;
+border: none;
+}
+
+.button-primary:hover {
+background-color: color-mix(in srgb, var(--primary-color) 85%, black) !important;
+}
+
+.button-primary:active {
+background-color: color-mix(in srgb, var(--primary-color) 70%, black) !important;
+transform: scale(0.98) !important;
+}
+
+.button-outline-primary{
+border: 1px solid #0f6fc5 !important;
+color:#0f6fc5 !important;
+transition: all .15s ease !important;
+}
+
+.button-outline-primary:hover{
+background-color: var(--primary-color) !important;
+color: var(--text-light) !important;
+}
+
+.modified-text-primary {
+color: var(--primary-color) !important;
+}
+
+.modified-bg-primary{
+background-color: var(--primary-color) !important;
+
+}
+
