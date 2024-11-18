@@ -91,7 +91,7 @@ function registerUser($connect, $fullname, $username, $email, $password, $role) 
         if ($resultInsert) {
             sendOTP($email, $otp);
             $_SESSION['registration_success'] = 'Successfully registered. Please check your email to verify your account.';
-            header('Location: verifyOtp.php');
+            header('Location: ../functions/verifyOtp.php');
             exit();
         } else {
             $_SESSION['registration_error'] = 'Unable to register. Please try again.';

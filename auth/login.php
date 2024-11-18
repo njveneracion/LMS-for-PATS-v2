@@ -161,7 +161,7 @@ if (isset($_POST['login'])) {
                     <small id="passwordHelp" class="form-text" style="display: none;">Enter your password.</small>
                     <?php if(isset($errorMessage)){echo $errorMessage;}?>
                     <input type="submit" class="button-primary form-control mt-3 p-3" value="Log in" name="login">
-                    <a href="forgotPassword.php" class="text-decoration-none modified-text-primary"><p class="text-center mt-1">Forgotten your password?</p></a>
+                    <a href="../functions/forgotPassword.php" class="text-decoration-none modified-text-primary"><p class="text-center mt-1">Forgotten your password?</p></a>
                 </form>
             </div>
         </div>
