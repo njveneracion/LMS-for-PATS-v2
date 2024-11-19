@@ -355,7 +355,7 @@
 
         // Function to check for new notifications
         function checkNewNotifications() {
-            fetch('get_notification.php')
+            fetch('get-notification.php')
                 .then(response => response.json())
                 .then(data => {
                     updateNotificationDropdown(data);
@@ -374,7 +374,7 @@
                 notifications.forEach(notification => {
                     notificationHtml += `
                         <li>
-                            <a class="dropdown-item" href="?page=i_notifications&id=${notification.id}">
+                            <a class="dropdown-item" href="?page=inotifications&id=${notification.id}">
                                 ${notification.message}
                                 <small class="text-muted d-block">${new Date(notification.created_at).toLocaleString()}</small>
                             </a>

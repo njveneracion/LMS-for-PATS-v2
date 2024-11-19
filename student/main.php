@@ -235,7 +235,7 @@ $notifications = checkNewNotifications($connect, $_SESSION['userID']);
                 <i class="fas fa-bars"></i>
             </button>
             <a class="navbar-brand" href="index.php">
-                <img src="../assets/images/pats-logo.png" alt="Pats Logo" style="height: 60px; width: 100%">
+                <img src="../assets/images/logo.jpg" alt="Pats Logo" style="height: 60px; width: 100%">
             </a>
             <div class="d-flex align-items-center ms-auto">
                 <div class="dropdown">
@@ -251,7 +251,7 @@ $notifications = checkNewNotifications($connect, $_SESSION['userID']);
                         <?php else: ?>
                             <?php foreach ($notifications as $notification): ?>
                                 <li>
-                                    <a class="dropdown-item" href="?page=s_notifications">
+                                    <a class="dropdown-item" href="?page=notifications">
                                         <?php echo htmlspecialchars($notification['message']); ?>
                                         <small class="text-muted d-block"><?php echo date('M d, Y H:i', strtotime($notification['created_at'])); ?></small>
                                     </a>
@@ -395,7 +395,7 @@ $notifications = checkNewNotifications($connect, $_SESSION['userID']);
     <script>
         // Function to check for new notifications
        function checkNewNotifications() {
-            fetch('get_notification.php')
+            fetch('get-notification.php')
                 .then(response => response.json())
                 .then(data => {
                     updateNotificationDropdown(data);
@@ -414,7 +414,7 @@ $notifications = checkNewNotifications($connect, $_SESSION['userID']);
             notifications.forEach(notification => {
                 notificationHtml += `
                     <li>
-                        <a class="dropdown-item" href="?page=s_notifications&id=${notification.id}">
+                        <a class="dropdown-item" href="?page=notifications&id=${notification.id}">
                             ${notification.message}
                             <small class="text-muted d-block">${new Date(notification.created_at).toLocaleString()}</small>
                         </a>

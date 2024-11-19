@@ -8,9 +8,14 @@ use Endroid\QrCode\Writer\PngWriter;
 
 function generateCertificate($studentID, $studentName, $courseID) {
     require('../certificates/fpdf186/fpdf.php');
+    global $connect;
+
+    // Fetch template details
+    $sqlTemplate = "SELECT * FROM certificate_templates WHERE id = 1"; // Assuming you have a default template with id 1
+    $resultTemplate = mysqli_query($connect, $sqlTemplate);
+    $template = mysqli_fetch_assoc($resultTemplate);
 
     // Check if the certificate already exists
-    global $connect;
     $sqlCheckCert = "SELECT certificate_path FROM certificates WHERE student_id = '$studentID' AND course_id = '$courseID'";
     $resultCheckCert = mysqli_query($connect, $sqlCheckCert);
     
@@ -39,9 +44,9 @@ function generateCertificate($studentID, $studentName, $courseID) {
         $completionDate = $row['completion_date'];
     }
 
-    $font = "../certificates/Radley-Regular.ttf";
+    $font = $template['font_path'];
     $time = time();
-    $imagePath = "../certificates/ecert-template.png";
+    $imagePath = $template['template_image_path'];
     $outputImagePath = "../certificates/download-certificates/$time.png";
     $outputPdfPath = "../certificates/download-certificates/$time.pdf";
 
@@ -64,34 +69,25 @@ function generateCertificate($studentID, $studentName, $courseID) {
 
     // Create image
     $image = imagecreatefrompng($imagePath);
-    $color = imagecolorallocate($image, 33, 52, 104);
+    list($r, $g, $b) = sscanf($template['text_color'], "#%02x%02x%02x");
+    $color = imagecolorallocate($image, $r, $g, $b);
     
-    $imageWidth = imagesx($image);
-    $imageHeight = imagesy($image);
+    $imageWidth = $template['template_width'];
+    $imageHeight = $template['template_height'];
 
-    // Center the student's name
-    $fontSize = 110;
-    $bbox = imagettfbbox($fontSize, 0, $font, $studentName);
-    $textWidth = $bbox[2] - $bbox[0];
-    $x = ($imageWidth - $textWidth) / 2;
-    $y = 600; // Adjust this value to move the name up or down
-    imagettftext($image, $fontSize, 0, $x, $y, $color, $font, $studentName);
+    // Resize the image to the template size
+    $resizedImage = imagecreatetruecolor($imageWidth, $imageHeight);
+    imagecopyresampled($resizedImage, $image, 0, 0, 0, 0, $imageWidth, $imageHeight, imagesx($image), imagesy($image));
+
+    // Add student's name
+    imagettftext($resizedImage, $template['student_name_font_size'], 0, $template['student_name_x'], $template['student_name_y'], $color, $font, $studentName);
 
     // Add course name
-    $fontSizeCourse = 32;
-    $bbox = imagettfbbox($fontSizeCourse, 0, $font, $courseName);
-    $textWidth = $bbox[2] - $bbox[0];
-    $x = ($imageWidth - $textWidth) / 2;
-    $y += 200; // Adjust this value to control the space between name and course
-    imagettftext($image, $fontSizeCourse, 0, $x, $y, $color, $font, $courseName);
+    imagettftext($resizedImage, $template['course_name_font_size'], 0, $template['course_name_x'], $template['course_name_y'], $color, $font, $courseName);
 
     // Add completion date
-    $fontSizeDate = 32;
     $completionDateText = date('F j, Y', strtotime($completionDate));
-    $bbox = imagettfbbox($fontSizeDate, 0, $font, $completionDateText);
-    $textWidth = $bbox[2] - $bbox[0];
-    $y += 60; // Adjust this value to control the space between course and date
-    imagettftext($image, $fontSizeDate, 0, 1000, $y, $color, $font, $completionDateText);
+    imagettftext($resizedImage, $template['completion_date_font_size'], 0, $template['completion_date_x'], $template['completion_date_y'], $color, $font, $completionDateText);
 
     // Resize dimensions for the QR code
     $newQRWidth = 170;  // Desired width
@@ -110,21 +106,22 @@ function generateCertificate($studentID, $studentName, $courseID) {
     // Copy and resize the QR code image to the new true color image
     imagecopyresampled($resizedQRImage, $qrImage, 0, 0, 0, 0, $newQRWidth, $newQRHeight, $qrWidth, $qrHeight);
 
-    $qrX = $imageWidth - $newQRWidth - 50; // x-axis
-    $qrY = imagesy($image) - $newQRHeight - 50; // y-axis
+    $qrX = $template['qr_code_x'];
+    $qrY = $template['qr_code_y'];
 
-    imagecopy($image, $resizedQRImage, $qrX, $qrY, 0, 0, $newQRWidth, $newQRHeight);
+    imagecopy($resizedImage, $resizedQRImage, $qrX, $qrY, 0, 0, $newQRWidth, $newQRHeight);
 
     // Save the final certificate image
-    imagepng($image, $outputImagePath);
+    imagepng($resizedImage, $outputImagePath);
     imagedestroy($image);
+    imagedestroy($resizedImage);
     imagedestroy($qrImage);
     imagedestroy($resizedQRImage);
 
     // Create PDF
     $pdf = new FPDF();
-    $pdf->AddPage('L', 'A5');
-    $pdf->Image($outputImagePath, 0, 0, 210, 148);
+    $pdf->AddPage('L', [$imageWidth, $imageHeight]);
+    $pdf->Image($outputImagePath, 0, 0, $imageWidth, $imageHeight);
     $pdf->Output('F', $outputPdfPath);
 
     // Save certificate information to the database

@@ -40,12 +40,12 @@ function handleContentCompletion($connect) {
     if (mysqli_stmt_execute($stmtInsert)) {
         echo "<script type='text/javascript'>
               alert('Content marked as completed successfully.');
-              window.location.href = 's_main.php?page=s_course_content&viewContent=$courseID';
+              window.location.href = 'main.php?page=course-content&viewContent=$courseID';
               </script>";
     } else {
         echo "<script type='text/javascript'>
               alert('Error marking content as completed. Please try again.');
-              window.location.href = 's_main.php?page=s_course_content&viewContent=$courseID';
+              window.location.href = 'main.php?page=course-content&viewContent=$courseID';
               </script>";
     }
     exit();
@@ -649,7 +649,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const courseID = this.getAttribute('data-course-id');
 
             if (contentType === 'Material') {
-                fetch(`get_content.php?id=${contentId}&type=${contentType}&courseID=${courseID}`)
+                fetch(`get-content.php?id=${contentId}&type=${contentType}&courseID=${courseID}`)
                     .then(response => response.json())
                     .then(data => {
                         if (data.success) {
@@ -768,7 +768,7 @@ document.addEventListener('DOMContentLoaded', function() {
         formData.append('contentID', contentId);
         formData.append('type', contentType);
 
-        fetch('get_content.php', {
+        fetch('get-content.php', {
             method: 'POST',
             body: formData
         })
@@ -804,7 +804,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function refreshAnnouncements() {
         const announcementsTab = document.getElementById('announcements');
         if (announcementsTab) {
-            fetch(`get_announcements.php?courseID=<?= $courseID ?>`)
+            fetch(`get-announcements.php?courseID=<?= $courseID ?>`)
                 .then(response => response.text())
                 .then(html => {
                     announcementsTab.innerHTML = html;
@@ -816,7 +816,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function refreshLearningMaterials() {
         const learningMaterialsTab = document.getElementById('learning-materials');
         if (learningMaterialsTab) {
-            fetch(`get_learning_materials.php?courseID=<?= $courseID ?>`)
+            fetch(`get-learning-materials.php?courseID=<?= $courseID ?>`)
                 .then(response => response.text())
                 .then(html => {
                     learningMaterialsTab.innerHTML = html;

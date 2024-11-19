@@ -28,8 +28,14 @@ switch($page){
     case 'manage-courses':
         $filename = 'manage-courses.php';
         break;
+    case 'generate-reports':
+        $filename = 'generate-reports.php';
+        break;
     case 'profile':
         $filename = 'profile.php';
+        break;
+    case 'edit-certificate':
+        $filename = 'edit-certificate.php';
         break;
     case 'edit-hero-section':
         $filename = '../cms/edit-hero.php';
@@ -122,14 +128,14 @@ $profilePic = $pic['profile_picture'] ?? 'default.png'; // Set default image if 
 
                     <li class="nav-link">
                         <a href="?page=activity-logs">
-                            <i class="fa-solid fa-chart-line icon modified-text-primary"></i>
+                            <i class="fa-solid fa-gear icon modified-text-primary"></i>
                             <span class="text nav-text modified-text-primary">Activity Logs</span>
                         </a>
                     </li>
 
                     <li class="nav-link">
                         <a href="?page=manage-users">
-                        <i class="fa-solid fa-users icon modified-text-primary"></i>
+                        <i class="fa-solid fa-users-gear icon modified-text-primary"></i>
                             <span class="text nav-text modified-text-primary">Manage Users</span>
                         </a>
                     </li>
@@ -142,11 +148,27 @@ $profilePic = $pic['profile_picture'] ?? 'default.png'; // Set default image if 
                     </li>
 
                     <li class="nav-link">
+                        <a href="?page=generate-reports">
+                          <i class="fa-solid fa-chart-line icon modified-text-primary"></i>
+                            <span class="text nav-text">Generate Reports</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-link">
                         <a href="?page=profile">
                         <i class="fa-solid fa-user-shield icon modified-text-primary"></i>
                             <span class="text nav-text modified-text-primary">Profile</span>
                         </a>
                     </li>
+
+                   <li class="nav-link">
+                        <a href="?page=edit-certificate">
+                            <i class="fa-solid fa-edit icon"></i>
+                            <span class="text nav-text">Edit Certificate</span>
+                        </a>
+                    </li>
+
+                    
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">

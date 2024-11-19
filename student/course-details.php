@@ -75,7 +75,6 @@
         $trainingSchedule = mysqli_real_escape_string($connect, $_POST['training_schedule']);
         $firstName = mysqli_real_escape_string($connect, $_POST['firstName']);
         $middleName = mysqli_real_escape_string($connect, $_POST['middleName']);
-        $middleInitial = mysqli_real_escape_string($connect, $_POST['middleInitial']);
         $lastName = mysqli_real_escape_string($connect, $_POST['lastName']);
         $extension = mysqli_real_escape_string($connect, $_POST['extension']);
         $dateOfBirth = mysqli_real_escape_string($connect, $_POST['dateOfBirth']);
@@ -105,16 +104,16 @@
             // Insert new registration
             $sql = "INSERT INTO course_registrations (
                 course_id, student_id, tvl_name, scholarship_type, trainer_name, training_schedule,
-                first_name, middle_name, middle_initial, last_name, extension,
+                first_name, middle_name, last_name, extension,
                 date_of_birth, place_of_birth, civil_status, sex, mobile_number,
                 email_address, highest_education_attainment, is_pwd, disability_type, reason,
                 pic_path, birthCert_path, status, created_at
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending', NOW())";
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending', NOW())";
         } else {
             // Update existing registration
             $sql = "UPDATE course_registrations SET
                 tvl_name = ?, scholarship_type = ?, trainer_name = ?, training_schedule = ?,
-                first_name = ?, middle_name = ?, middle_initial = ?, last_name = ?, extension = ?,
+                first_name = ?, middle_name = ?, last_name = ?, extension = ?,
                 date_of_birth = ?, place_of_birth = ?, civil_status = ?, sex = ?, mobile_number = ?,
                 email_address = ?, highest_education_attainment = ?, is_pwd = ?, disability_type = ?, reason = ?,
                 pic_path = ?, birthCert_path = ?, status = 'pending', updated_at = NOW()
@@ -124,16 +123,16 @@
         $stmt = mysqli_prepare($connect, $sql);
 
         if ($action == "INSERT") {
-            mysqli_stmt_bind_param($stmt, "iissssssssssssssssissss", 
+            mysqli_stmt_bind_param($stmt, "iisssssssssssssssissss", 
                 $courseID, $studentID, $tvlName, $scholarshipType, $trainerName, $trainingSchedule,
-                $firstName, $middleName, $middleInitial, $lastName, $extension,
+                $firstName, $middleName, $lastName, $extension,
                 $dateOfBirth, $placeOfBirth, $civilStatus, $sex, $mobileNumber,
                 $emailAddress, $educationAttainment, $isDisabled, $disabilityType, $reason,
                 $picturePath, $birthCertificatePath);
         } else {
-            mysqli_stmt_bind_param($stmt, "ssssssssssssssssissssi", 
+            mysqli_stmt_bind_param($stmt, "sssssssssssssssissssi", 
                 $tvlName, $scholarshipType, $trainerName, $trainingSchedule,
-                $firstName, $middleName, $middleInitial, $lastName, $extension,
+                $firstName, $middleName, $lastName, $extension,
                 $dateOfBirth, $placeOfBirth, $civilStatus, $sex, $mobileNumber,
                 $emailAddress, $educationAttainment, $isDisabled, $disabilityType, $reason,
                 $picturePath, $birthCertificatePath, $existingRegistrationId);
@@ -265,7 +264,7 @@
 
                 if ($resultEnroll) {
                    if(logActivity($studentID, $action, $description)){
-                    echo "<script>window.location.href = 's_main.php?page=s_course_content&viewContent={$courseID}';</script>";
+                    echo "<script>window.location.href = 'main.php?page=course-content&viewContent={$courseID}';</script>";
                     exit();
                    }
                     
@@ -341,7 +340,7 @@
                         <div class="alert alert-warning mt-3" role="alert">
                             <strong>In Progress</strong> You are already enrolled in this course.
                         </div> 
-                        <a href="s_main.php?page=s_course_content&viewContent=<?= $courseID; ?>" class="btn btn-primary btn-block">Go to Course</a>
+                        <a href="main.php?page=course-content&viewContent=<?= $courseID; ?>" class="btn btn-primary btn-block">Go to Course</a>
                     <?php elseif($isEnrolled && $enrollStatus === 'Completed'): ?>
                         <div class="alert alert-success mt-3" role="alert">
                             <strong>Completed</strong> You already completed this course.
@@ -575,10 +574,6 @@
                                 <input type="text" name="middleName" class="form-control" value="<?php
                                 echo $middleName;
                                 ?>">
-                            </div>
-                            <div class="col-md-2">
-                                <label class="form-label">Middle Initial</label>
-                                <input type="text" name="middleInitial" maxlength="2" class="form-control">
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label">Last Name</label>

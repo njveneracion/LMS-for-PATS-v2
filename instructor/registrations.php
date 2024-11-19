@@ -12,7 +12,7 @@ if (isset($_GET['id']) && isset($_GET['courseID'])) {
         SELECT cr.registration_id, cr.student_id, u.fullname, c.course_name, c.course_code, cr.status, cr.created_at as registration_date,
                cr.tvl_name, cr.scholarship_type, cr.trainer_name, cr.training_schedule,
                cr.pic_path, cr.birthCert_path, c.course_id,
-               cr.first_name, cr.middle_name, cr.middle_initial, cr.last_name, cr.extension,
+               cr.first_name, cr.middle_name, cr.last_name, cr.extension,
                cr.date_of_birth, cr.place_of_birth, cr.civil_status, cr.sex, cr.mobile_number,
                cr.email_address, cr.highest_education_attainment, cr.is_pwd, cr.disability_type, cr.reason
         FROM course_registrations cr
