@@ -8,6 +8,15 @@ $profilePic = $userData['profile_picture'] ?? 'default.jpg';
 $refreshPage = false;
 
 if (isset($_POST['updateProfile'])) {
+    $fullname = $_POST['fullname'];
+
+    $sqlUpdate = "UPDATE users SET fullname = '$fullname' WHERE user_id = '$userID'";
+    if (mysqli_query($connect, $sqlUpdate)) {
+        $toastMessage = "Profile updated successfully!";
+        $refreshPage = true;
+    } else {
+        $toastMessage = "Failed to update profile.";
+    }
     // Handle profile picture upload
     if ($_FILES['profilePic']['size'] > 0) {
         $targetDirectory = "../uploads/profile-pictures/";
@@ -57,11 +66,6 @@ $totalEnrollments = mysqli_fetch_assoc($resultTotalEnrollments)['total'];
 ?>
 
 <style>
-    :root {
-        --primary-color: #0f6fc5;
-        --primary-light: #e6f2ff;
-        --text-color: #333333;
-    }
 
     body {
         font-family: 'Arial', sans-serif;
@@ -226,6 +230,9 @@ $totalEnrollments = mysqli_fetch_assoc($resultTotalEnrollments)['total'];
             </div>
             <div class="modal-body">
                 <form id="profileForm" method="post" enctype="multipart/form-data">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" name="fullname" class="form-control mb-3" value="<?= $userData['fullname'] ?>" required>
+
                     <div class="mb-3">
                         <label for="profilePic" class="form-label">Profile Picture</label>
                         <input type="file" name="profilePic" accept="image/*" class="form-control">

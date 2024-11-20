@@ -5,7 +5,6 @@ require '../vendor/autoload.php'; // Composer autoload
 use Endroid\QrCode\QrCode;
 use Endroid\QrCode\Writer\PngWriter;
 
-
 function generateCertificate($studentID, $studentName, $courseID) {
     require('../certificates/fpdf186/fpdf.php');
     global $connect;
@@ -33,7 +32,6 @@ function generateCertificate($studentID, $studentName, $courseID) {
         $courseName = $row['course_name'];
     }
    
-
     // Fetch course completion date (assuming it's stored in the database)
     $sqlCompletionDate = "SELECT completion_date FROM enrollments WHERE user_id = '$studentID' AND course_id = '$courseID'";
     $resultCompletionDate = mysqli_query($connect, $sqlCompletionDate);
@@ -44,11 +42,28 @@ function generateCertificate($studentID, $studentName, $courseID) {
         $completionDate = $row['completion_date'];
     }
 
-    $font = $template['font_path'];
+    
     $time = time();
     $imagePath = $template['template_image_path'];
     $outputImagePath = "../certificates/download-certificates/$time.png";
     $outputPdfPath = "../certificates/download-certificates/$time.pdf";
+
+    // Set the canvas dimensions
+    $canvasWidth = 800;
+    $canvasHeight = 600;
+
+    // Load the image and get its dimensions
+    $image = imagecreatefrompng($imagePath);
+    $imageWidth = imagesx($image);
+    $imageHeight = imagesy($image);
+
+    // Resize the image to the canvas size
+    $resizedImage = imagecreatetruecolor($canvasWidth, $canvasHeight);
+    imagecopyresampled($resizedImage, $image, 0, 0, 0, 0, $canvasWidth, $canvasHeight, $imageWidth, $imageHeight);
+    $font = $template['font_path'];
+    $color = $template['text_color']; // Assuming the color is stored in hex format, e.g., "#FF5733"
+    list($r, $g, $b) = sscanf($color, "#%02x%02x%02x");
+    $colorAllocated = imagecolorallocate($resizedImage, $r, $g, $b);
 
     // QR code data with student information and completion date
     $qrData = json_encode([
@@ -67,31 +82,29 @@ function generateCertificate($studentID, $studentName, $courseID) {
     $qrCodePath = "../certificates/download-certificates/$time-qr.png";
     $qrResult->saveToFile($qrCodePath);
 
-    // Create image
-    $image = imagecreatefrompng($imagePath);
-    list($r, $g, $b) = sscanf($template['text_color'], "#%02x%02x%02x");
-    $color = imagecolorallocate($image, $r, $g, $b);
-    
-    $imageWidth = $template['template_width'];
-    $imageHeight = $template['template_height'];
-
-    // Resize the image to the template size
-    $resizedImage = imagecreatetruecolor($imageWidth, $imageHeight);
-    imagecopyresampled($resizedImage, $image, 0, 0, 0, 0, $imageWidth, $imageHeight, imagesx($image), imagesy($image));
+    // Function to center text
+    function centerText($image, $text, $fontSize, $x, $y, $color, $font) {
+        $bbox = imagettfbbox($fontSize, 0, $font, $text);
+        $textWidth = $bbox[2] - $bbox[0];
+        $textHeight = $bbox[1] - $bbox[7];
+        $x = $x - ($textWidth / 2);
+        $y = $y + ($textHeight / 2);
+        imagettftext($image, $fontSize, 0, $x, $y, $color, $font, $text);
+    }
 
     // Add student's name
-    imagettftext($resizedImage, $template['student_name_font_size'], 0, $template['student_name_x'], $template['student_name_y'], $color, $font, $studentName);
+    centerText($resizedImage, $studentName, $template['student_name_font_size'], $template['student_name_x'], $template['student_name_y'], $colorAllocated, $font);
 
     // Add course name
-    imagettftext($resizedImage, $template['course_name_font_size'], 0, $template['course_name_x'], $template['course_name_y'], $color, $font, $courseName);
+    centerText($resizedImage, $courseName, $template['course_name_font_size'], $template['course_name_x'], $template['course_name_y'], $colorAllocated, $font);
 
     // Add completion date
     $completionDateText = date('F j, Y', strtotime($completionDate));
-    imagettftext($resizedImage, $template['completion_date_font_size'], 0, $template['completion_date_x'], $template['completion_date_y'], $color, $font, $completionDateText);
+    centerText($resizedImage, $completionDateText, $template['completion_date_font_size'], $template['completion_date_x'], $template['completion_date_y'], $colorAllocated, $font);
 
     // Resize dimensions for the QR code
-    $newQRWidth = 170;  // Desired width
-    $newQRHeight = 170; // Desired height
+    $newQRWidth = 100;  // Desired width
+    $newQRHeight = 100; // Desired height
 
     // Create a new true color image with the desired dimensions
     $resizedQRImage = imagecreatetruecolor($newQRWidth, $newQRHeight);
@@ -120,8 +133,8 @@ function generateCertificate($studentID, $studentName, $courseID) {
 
     // Create PDF
     $pdf = new FPDF();
-    $pdf->AddPage('L', [$imageWidth, $imageHeight]);
-    $pdf->Image($outputImagePath, 0, 0, $imageWidth, $imageHeight);
+    $pdf->AddPage('L', [$canvasWidth, $canvasHeight]);
+    $pdf->Image($outputImagePath, 0, 0, $canvasWidth, $canvasHeight);
     $pdf->Output('F', $outputPdfPath);
 
     // Save certificate information to the database

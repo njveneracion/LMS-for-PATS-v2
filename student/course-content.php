@@ -492,6 +492,8 @@ function displayLearningMaterials($connect, $courseID) {
     }
     $stmt->close();
 }
+
+ generateStudentCertificate($connect, $studentID, $courseID);
 ?>
 
 <style>
