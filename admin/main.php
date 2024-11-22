@@ -43,6 +43,9 @@ switch($page){
     case 'edit-header':
         $filename = '../cms/edit-header.php';
         break;
+    case 'edit-skills':
+        $filename = '../cms/edit-skills.php';
+        break;
     
     case 'logout':
         $action = 'Logout';
@@ -178,6 +181,7 @@ $profilePic = $pic['profile_picture'] ?? 'default.png'; // Set default image if 
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="?page=edit-header">Edit Header</a>
                             <a class="dropdown-item" href="?page=edit-hero-section">Edit Hero Section</a>
+                            <a class="dropdown-item" href="?page=edit-skills">Edit Skills</a>
                             
                         </div>
                     </li>

@@ -161,7 +161,7 @@ if(isset($_GET['courseID']) && isset($_GET['studentID'])){
                 <button class="btn-cert">Download Certificate</button>
             </a>
         </p>
-        <a href="main.php?page=course-content&viewContent=<?= $courseID; ?>" class="goback">Go back</a>
+        <a href="../student/main.php?page=course-content&viewContent=<?= $courseID; ?>" class="goback">Go back</a>
     </div>
     <?php
 }

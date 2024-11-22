@@ -415,7 +415,7 @@ function displayCertificateArea($connect, $courseID, $studentID) {
                     <h5 class="card-title">Course Certificate</h5>
                     <p class="card-text">Congratulations! You have completed this course.</p>
                     <p>Certificate issued on: <?= htmlspecialchars($certificate['generated_at']) ?></p>
-                    <a href="generateCertificate.php?courseID=<?= $courseID ?>&studentID=<?= $studentID ?>" 
+                    <a href="../functions/generateCertificate.php?courseID=<?= $courseID ?>&studentID=<?= $studentID ?>" 
                        class="btn btn-primary" target="_blank">
                         View Certificate
                     </a>
@@ -493,7 +493,6 @@ function displayLearningMaterials($connect, $courseID) {
     $stmt->close();
 }
 
- generateStudentCertificate($connect, $studentID, $courseID);
 ?>
 
 <style>

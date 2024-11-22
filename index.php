@@ -21,7 +21,6 @@
     <?php include 'components/hero.php'; ?>
     <main class="container my-5">
         <?php include 'components/skills.php'; ?>
-        <?php include 'components/features.php'; ?>
         <?php include 'components/courses.php'; ?>  
         <?php include 'components/cta.php'; ?>
         <?php include 'components/testimonials.php'; ?>

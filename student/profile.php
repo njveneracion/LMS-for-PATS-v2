@@ -1,9 +1,10 @@
 <?php
 $userID = $_SESSION['userID'];
-$sqlProfile = "SELECT profile_picture FROM users WHERE user_id = '$userID'";
+$sqlProfile = "SELECT profile_picture, fullname FROM users WHERE user_id = '$userID'";
 $resultProfile = mysqli_query($connect, $sqlProfile);
 $userData = mysqli_fetch_assoc($resultProfile);
 $profilePic = $userData['profile_picture'] ?? 'default.png';
+$fullname = $userData['fullname'] ?? '';
 
 $refreshPage = false; // Add this line at the beginning of your PHP code
 
@@ -153,11 +154,7 @@ $completedCourses = mysqli_fetch_all($resultCompletedCourses, MYSQLI_ASSOC);
                 <div class="card-body profile-container text-center">
                     <img src="../uploads/profile-pictures/<?php echo (!empty($profilePic)) ? $profilePic : 'default.png'; ?>" alt="Profile Picture" class="mb-3">
                     <h3 class="text-capitalize">
-                        <?= $userDetails['first_name'] ?? '' ?> 
-                        <?= $userDetails['middle_name'] ?? '' ?> 
-                        <?= $userDetails['last_name'] ?? '' ?> 
-                        <?= $userDetails['extension'] ?? '' ?>
-                        <?= $userDetails['fullname'] ?? '' ?>
+                        <?= $fullname; ?>
                     </h3>
                     <p class="text-muted">Student</p>
                     <button class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#profileModal">
@@ -243,7 +240,7 @@ $completedCourses = mysqli_fetch_all($resultCompletedCourses, MYSQLI_ASSOC);
                 <form id="profileForm" method="post" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label for="fullname" class="form-label">Full Name</label>
-                        <input type="text" name="fullname" class="form-control" value="<?= $userDetails['fullname'] ?? '' ?>">
+                        <input type="text" name="fullname" class="form-control" value="TEST">
                     </div>
                     <div class="mb-3">
                         <label for="profilePic" class="form-label">Profile Picture</label>
