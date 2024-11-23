@@ -95,6 +95,11 @@
     $resultProfile = mysqli_query($connect, $sqlProfile);
     $pic = mysqli_fetch_assoc($resultProfile);
     $profilePic = $pic['profile_picture'] ?? 'default.png';
+
+    $sqlHeader = "SELECT * FROM header";
+    $resultHeader = mysqli_query($connect, $sqlHeader);
+    $header = mysqli_fetch_assoc($resultHeader);
+    $logo = $header['logo'];
 ?>
 
 <!DOCTYPE html>
@@ -156,7 +161,7 @@
                 <i class="fas fa-bars"></i>
             </button>
             <a class="navbar-brand" href="index.php">
-                <img src="../assets/images/pats-logo.png" alt="Pats Logo" style="height: 60px; width: 100%">
+                <img src="<?= $logo; ?>" alt="Pats Logo" style="height: 60px; width: 100%">
             </a>
             <div class="d-flex align-items-center ms-auto">
                 <div class="dropdown dropdown-center">

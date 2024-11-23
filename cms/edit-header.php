@@ -71,7 +71,7 @@ $row = $result->fetch_assoc();
                             <a class="nav-link" href="#about" data-section="about">About</a>
                         </li>
                         <li class="nav-item ms-3 login-btn-toggle">
-                            <a href="../auth/login.php" class="btn btn-primary button-primary px-4">Login</a>
+                            <a  class="btn btn-primary button-primary px-4">Login</a>
                         </li>
                     </ul> 
                 </div>

@@ -1,0 +1,29 @@
+ErrorDocument 404 /error404.php
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Ensure the requested file or directory doesn't exist
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    
+    # Rewrite all other requests to error404.php
+    RewriteRule . /error404.php [L]
+</IfModule>
+
+# Allow access from all devices on the local network
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+    Header set Access-Control-Allow-Methods "GET, POST, OPTIONS"
+    Header set Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type, Accept"
+    Header set Access-Control-Allow-Credentials "true"
+</IfModule>
+
+# PHP settings for better session handling
+<IfModule mod_php7.c>
+    php_value session.cookie_httponly 1
+    php_value session.use_only_cookies 1
+    php_value session.cookie_samesite "Lax"
+    php_value session.cookie_lifetime 0
+    php_value session.gc_maxlifetime 1440
+</IfModule>

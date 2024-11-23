@@ -27,6 +27,6 @@ if (mysqli_num_rows($result) > 0) {
     <div class="container">
         <h1 class="display-4 fw-bold" data-aos="fade-down" data-aos-delay="200"><?php echo htmlspecialchars($title); ?></h1>
         <p class="lead" data-aos="fade-up" data-aos-delay="400"><?php echo htmlspecialchars($subtitle); ?></p>
-        <a href="../auth/login.php" class="btn btn-primary button-primary btn-lg mt-3" data-aos="zoom-in" data-aos-delay="600"><?php echo htmlspecialchars($button_text); ?></a>
+        <a href="../auth/login.php" class="btn btn-primary button-primary btn-lg mt-3 rounded" data-aos="zoom-in" data-aos-delay="600"><?php echo htmlspecialchars($button_text); ?></a>
     </div>
 </section>

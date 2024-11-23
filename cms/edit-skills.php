@@ -6,6 +6,88 @@ $s_sub_header = '';
 $s_icon = '';
 $s_title = '';
 $s_description = '';
+$iconCategories = [
+    'General' => [
+        'fa-brain', 'fa-comments', 'fa-users', 'fa-lightbulb', 
+        'fa-apple-alt', 'fa-archway', 'fa-balance-scale', 'fa-basketball-ball', 
+        'fa-bell', 'fa-bicycle', 'fa-binoculars', 'fa-birthday-cake', 
+        'fa-blender', 'fa-bolt', 'fa-bomb', 'fa-book', 
+        'fa-book-open', 'fa-briefcase', 'fa-broom', 'fa-brush',
+        'fa-bug', 'fa-building', 'fa-bullhorn', 'fa-bullseye', 
+        'fa-bus', 'fa-calculator', 'fa-calendar', 'fa-camera'
+    ],
+    'Technology' => [
+        'fa-laptop-code', 'fa-chart-bar', 'fa-project-diagram', 'fa-tasks', 
+        'fa-desktop', 'fa-database', 'fa-cogs', 'fa-cogs', 
+        'fa-compass', 'fa-compress', 'fa-cube', 'fa-cubes', 
+        'fa-edit', 'fa-code', 'fa-cogs', 'fa-robot', 
+        'fa-terminal', 'fa-microchip', 'fa-keyboard', 'fa-plug'
+    ],
+    'Nature' => [
+        'fa-tree', 'fa-leaf', 'fa-flower', 'fa-seedling', 
+        'fa-sun', 'fa-sunrise', 'fa-sunset', 'fa-cloud', 
+        'fa-snowflake', 'fa-wind', 'fa-water', 'fa-mountain',
+        'fa-frog', 'fa-paw', 'fa-bug', 'fa-dog'
+    ],
+    'Transportation' => [
+        'fa-car', 'fa-bicycle', 'fa-bus', 'fa-truck', 
+        'fa-motorcycle', 'fa-ambulance', 'fa-plane', 'fa-ship', 
+        'fa-taxi', 'fa-subway', 'fa-train', 'fa-bus-alt'
+    ],
+    'Medical' => [
+        'fa-hospital', 'fa-stethoscope', 'fa-prescription', 'fa-first-aid',
+        'fa-pills', 'fa-syringe', 'fa-heartbeat', 'fa-disease',
+        'fa-band-aid', 'fa-tooth', 'fa-medkit', 'fa-hands-helping'
+    ],
+    'Business' => [
+        'fa-briefcase', 'fa-suitcase', 'fa-handshake', 'fa-dollar-sign', 
+        'fa-credit-card', 'fa-file', 'fa-clipboard', 'fa-calculator', 
+        'fa-chart-line', 'fa-piggy-bank', 'fa-cogs', 'fa-tasks'
+    ],
+    'Food & Drink' => [
+        'fa-coffee', 'fa-pizza-slice', 'fa-apple-alt', 'fa-carrot', 
+        'fa-burger', 'fa-drumstick-bite', 'fa-wine-glass', 'fa-cocktail', 
+        'fa-beer', 'fa-utensils', 'fa-ice-cream', 'fa-cookie'
+    ],
+    'Entertainment' => [
+        'fa-film', 'fa-gamepad', 'fa-music', 'fa-theater-masks', 
+        'fa-tv', 'fa-video', 'fa-camera', 'fa-microphone',
+        'fa-headphones', 'fa-video-slash', 'fa-podcast', 'fa-dice'
+    ],
+    'Health & Wellness' => [
+        'fa-running', 'fa-heart', 'fa-bicycle', 'fa-dumbbell', 
+        'fa-walking', 'fa-weight', 'fa-yoga', 'fa-hands-helping', 
+        'fa-smile', 'fa-sun', 'fa-teeth', 'fa-tooth'
+    ],
+    'Social' => [
+        'fa-users', 'fa-user', 'fa-user-plus', 'fa-user-circle', 
+        'fa-user-friends', 'fa-user-times', 'fa-user-lock', 'fa-user-slash',
+        'fa-comments', 'fa-comment-dots', 'fa-share-alt', 'fa-share',
+        'fa-thumbs-up', 'fa-thumbs-down', 'fa-heart', 'fa-smile-beam'
+    ],
+    'Sports' => [
+        'fa-basketball-ball', 'fa-football-ball', 'fa-baseball-ball', 'fa-tennis-ball',
+        'fa-volleyball-ball', 'fa-bowling-ball', 'fa-golf-ball', 'fa-hockey-puck',
+        'fa-soccer-ball', 'fa-table-tennis', 'fa-futbol', 'fa-gym'
+    ],
+    'Weather' => [
+        'fa-sun', 'fa-cloud', 'fa-snowflake', 'fa-wind', 
+        'fa-cloud-sun', 'fa-cloud-showers-heavy', 'fa-thunderstorm', 'fa-rainbow',
+        'fa-sunrise', 'fa-sunset', 'fa-cloud-sun-rain', 'fa-snowman'
+    ],
+    'Miscellaneous' => [
+        'fa-bolt', 'fa-lightbulb', 'fa-paint-brush', 'fa-magic', 
+        'fa-gem', 'fa-fire', 'fa-star', 'fa-heart',
+        'fa-gift', 'fa-rocket', 'fa-key', 'fa-wrench', 
+        'fa-tools', 'fa-calendar-alt', 'fa-anchor', 'fa-bug'
+    ],
+    'Symbols' => [
+        'fa-check', 'fa-exclamation', 'fa-times', 'fa-plus', 
+        'fa-minus', 'fa-cogs', 'fa-circle', 'fa-square', 
+        'fa-heart', 'fa-check-circle', 'fa-ban', 'fa-warning', 
+        'fa-arrow-left', 'fa-arrow-right', 'fa-arrow-up', 'fa-arrow-down'
+    ]
+];
 
 // Check if the record exists
 $sqlCheck = "SELECT * FROM skills";
@@ -18,65 +100,166 @@ $s_icon = $row['icon'];
 $s_title = $row['title'];
 $s_description = $row['description'];
 
-if (isset($_POST['update'])) {
+if (isset($_POST['update_header'])) {
     $header = $_POST['header'];
     $sub_header = $_POST['sub_header'];
-    $title = $_POST['title'];
-    $description = $_POST['description'];
-    $icon = $_POST['icon'];
 
     if (mysqli_num_rows($resultCheck) > 0) {
         // Record exists, perform update
-        $sql = "UPDATE skills SET header = '$header', sub_header = '$sub_header', icon = '$icon', title = '$title', description = '$description' WHERE id = 1";
+        $sql = "UPDATE skills SET header = '$header', sub_header = '$sub_header' WHERE id = 34";
+        $result = mysqli_query($connect, $sql);
+
+        if ($result) {
+            echo '<div class="alert alert-success alert-dismissible fade show container" role="alert">
+                Header and Subheader updated successfully!
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>';
+        } else {
+            echo '<div class="alert alert-danger alert-dismissible fade show container" role="alert">Failed to update Header and Subheader!
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>';
+        }
+
     } else {
         // Record does not exist, perform insert
-        $sql = "INSERT INTO skills (header, sub_header, icon, title, description) VALUES ('$header', '$sub_header', '$icon', '$title', '$description')";
+        $sql = "INSERT INTO skills (header, sub_header) VALUES ('$header', '$sub_header')";
     }
+
+    // reload the page
+    echo "<meta http-equiv='refresh' content='0'>";  
+}
+
+if (isset($_POST['add'])) {
+    $icon = $_POST['icon'];
+    $title = $_POST['title'];
+    $description = $_POST['description'];
+
+    // Perform insert
+    $sql = "INSERT INTO skills (icon, title, description) VALUES ('$icon', '$title', '$description')";
 
     $result = mysqli_query($connect, $sql);
 
     if ($result) {
         echo '<div class="alert alert-success alert-dismissible fade show container" role="alert">
-            Skill section updated successfully!
+            Icon, Title, and Description added successfully!
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>';
     } else {
-        echo '<div class="alert alert-danger alert-dismissible fade show container" role="alert">Failed to update skill section!
+        echo '<div class="alert alert-danger alert-dismissible fade show container" role="alert">Failed to add Icon, Title, and Description!
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>';
+    }
+}
+
+if (isset($_POST['delete_id'])) {
+    $id = $_POST['delete_id'];
+
+    // Perform delete
+    $sql = "DELETE FROM skills WHERE id = $id";
+
+    $result = mysqli_query($connect, $sql);
+
+    if ($result) {
+        echo '<div class="alert alert-success alert-dismissible fade show container" role="alert">
+            Skill deleted successfully!
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>';
+    } else {
+        echo '<div class="alert alert-danger alert-dismissible fade show container" role="alert">Failed to delete Skill!
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>';
     }
 }
 ?>
 
-<div class="container">
-    <h2 class="fw-semibold">Edit Skill Section</h2>
-    <form method="post" action="" enctype="multipart/form-data">
-        <div class="form-group">
-            <label for="header">Header</label>
-            <input type="text" class="form-control" id="header" name="header" value="<?= $s_header; ?>">
+<div class="container mt-5 mb-5">
+    <h2 class="fw-semibold text-center mb-4">Edit Skill Section</h2>
+    
+    <!-- Form for Header and Subheader -->
+    <div class="card mb-5">
+        <div class="card-header">
+            <h5 class="card-title mb-0">Header and Subheader</h5>
         </div>
-        <div class="form-group">
-            <label for="subtitle">Sub Header</label>
-            <textarea class="form-control" id="subtitle" name="sub_header"><?= $s_sub_header; ?></textarea>
+        <div class="card-body">
+            <form method="post" action="" enctype="multipart/form-data" class="needs-validation" novalidate>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="header" class="form-label">Header</label>
+                            <input type="text" class="form-control" id="header" name="header" value="<?= $s_header; ?>" placeholder="Enter header" required>
+                            <div class="invalid-feedback">
+                                Please provide a header.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="sub_header" class="form-label">Sub Header</label>
+                            <textarea class="form-control" id="sub_header" name="sub_header" rows="3" placeholder="Enter sub header" required><?= $s_sub_header; ?></textarea>
+                            <div class="invalid-feedback">
+                                Please provide a sub header.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary" name="update_header">
+                        <i class="fas fa-save"></i> Update Header and Subheader
+                    </button>
+                </div>
+            </form>
         </div>
-        <div class="form-group">
-            <label for="icon">Icon</label>
-            <div class="input-group">
-                <input type="text" class="form-control" id="icon" name="icon" value="<?= $s_icon; ?>" readonly>
-                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#iconModal">Select Icon</button>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="title">Title</label>
-            <input type="text" class="form-control" id="title" name="title" value="<?= $s_title; ?>">
-        </div>
-        <div class="form-group">
-            <label for="description">Description</label>
-            <textarea class="form-control" id="description" name="description"><?= $s_description; ?></textarea>
-        </div>
+    </div>
 
-        <button type="submit" class="btn btn-primary mt-3" name="update">Update</button>
-    </form>
+    <!-- Form for Icon, Title, and Description -->
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title mb-0">Icon, Title, and Description</h5>
+        </div>
+        <div class="card-body">
+            <form method="post" action="" enctype="multipart/form-data" class="needs-validation" novalidate>
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="icon" class="form-label">Icon</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="icon" name="icon" readonly required>
+                                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#iconModal">
+                                    <i class="fas fa-icons"></i> Select Icon
+                                </button>
+                                <div class="invalid-feedback">
+                                    Please select an icon.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="title" class="form-label">Title</label>
+                            <input type="text" class="form-control" id="title" name="title" placeholder="Enter title" required>
+                            <div class="invalid-feedback">
+                                Please provide a title.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control" id="description" name="description" rows="3" placeholder="Enter description" required></textarea>
+                            <div class="invalid-feedback">
+                                Please provide a description.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary" name="add">
+                        <i class="fas fa-plus"></i> Add Icon, Title, and Description
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 <!-- Icon Selection Modal -->
@@ -88,127 +271,27 @@ if (isset($_POST['update'])) {
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="row">
+                <div class="form-group mb-3">
+                    <input type="text" class="form-control" id="iconSearch" placeholder="Search for an icon...">
+                </div>
+                <div class="form-group mb-3">
+                    <select class="form-select" id="iconCategory">
+                        <option value="all">All Categories</option>
+                        <?php foreach ($iconCategories as $category => $icons) { ?>
+                            <option value="<?= $category; ?>"><?= $category; ?></option>
+                        <?php } ?>
+                    </select>
+                </div>
+                <div class="row" id="iconContainer">
                     <?php
-                    // List of FontAwesome icons
-                    $icons = [
-                        'fa-brain', 'fa-comments', 'fa-users', 'fa-lightbulb',
-                        'fa-laptop-code', 'fa-chart-bar', 'fa-project-diagram', 'fa-tasks',
-                        'fa-apple-alt', 'fa-archway', 'fa-balance-scale', 'fa-basketball-ball',
-                        'fa-bell', 'fa-bicycle', 'fa-binoculars', 'fa-birthday-cake',
-                        'fa-blender', 'fa-bolt', 'fa-bomb', 'fa-book', 'fa-book-open',
-                        'fa-briefcase', 'fa-broom', 'fa-brush', 'fa-bug', 'fa-building',
-                        'fa-bullhorn', 'fa-bullseye', 'fa-bus', 'fa-calculator', 'fa-calendar',
-                        'fa-camera', 'fa-campground', 'fa-car', 'fa-carrot', 'fa-cat',
-                        'fa-chalkboard', 'fa-chart-line', 'fa-check', 'fa-check-circle',
-                        'fa-chess', 'fa-child', 'fa-church', 'fa-circle', 'fa-clipboard',
-                        'fa-clock', 'fa-cloud', 'fa-coffee', 'fa-cog', 'fa-cogs',
-                        'fa-compass', 'fa-compress', 'fa-cookie', 'fa-couch', 'fa-credit-card',
-                        'fa-cube', 'fa-cubes', 'fa-cut', 'fa-database', 'fa-desktop',
-                        'fa-dice', 'fa-dog', 'fa-dollar-sign', 'fa-dolly', 'fa-dove',
-                        'fa-drafting-compass', 'fa-dragon', 'fa-drum', 'fa-dumbbell', 'fa-edit',
-                        'fa-egg', 'fa-envelope', 'fa-equals', 'fa-eraser', 'fa-euro-sign',
-                        'fa-exclamation', 'fa-exclamation-circle', 'fa-exclamation-triangle', 'fa-expand',
-                        'fa-eye', 'fa-eye-dropper', 'fa-fan', 'fa-feather', 'fa-fighter-jet',
-                        'fa-file', 'fa-film', 'fa-filter', 'fa-fire', 'fa-fire-extinguisher',
-                        'fa-flag', 'fa-flask', 'fa-flushed', 'fa-folder', 'fa-football-ball',
-                        'fa-frog', 'fa-frown', 'fa-futbol', 'fa-gamepad', 'fa-gas-pump',
-                        'fa-gavel', 'fa-gem', 'fa-gift', 'fa-glass-martini', 'fa-globe',
-                        'fa-golf-ball', 'fa-gopuram', 'fa-graduation-cap', 'fa-guitar', 'fa-hamburger',
-                        'fa-hammer', 'fa-hand-holding', 'fa-hand-paper', 'fa-handshake', 'fa-hard-hat',
-                        'fa-hashtag', 'fa-hat-wizard', 'fa-headphones', 'fa-heart', 'fa-heartbeat',
-                        'fa-helicopter', 'fa-highlighter', 'fa-hiking', 'fa-hippo', 'fa-hockey-puck',
-                        'fa-home', 'fa-horse', 'fa-hospital', 'fa-hotdog', 'fa-hotel',
-                        'fa-hourglass', 'fa-house-damage', 'fa-hryvnia', 'fa-ice-cream', 'fa-icicles',
-                        'fa-id-badge', 'fa-id-card', 'fa-image', 'fa-images', 'fa-inbox',
-                        'fa-infinity', 'fa-info', 'fa-info-circle', 'fa-italic', 'fa-jedi',
-                        'fa-joint', 'fa-journal-whills', 'fa-kaaba', 'fa-key', 'fa-keyboard',
-                        'fa-khanda', 'fa-kiss', 'fa-kiss-beam', 'fa-kiss-wink-heart', 'fa-kiwi-bird',
-                        'fa-landmark', 'fa-language', 'fa-laptop', 'fa-laugh', 'fa-leaf',
-                        'fa-lemon', 'fa-less-than', 'fa-less-than-equal', 'fa-life-ring', 'fa-lightbulb',
-                        'fa-link', 'fa-lira-sign', 'fa-list', 'fa-list-alt', 'fa-location-arrow',
-                        'fa-lock', 'fa-lock-open', 'fa-long-arrow-alt-down', 'fa-long-arrow-alt-left', 'fa-long-arrow-alt-right',
-                        'fa-long-arrow-alt-up', 'fa-low-vision', 'fa-luggage-cart', 'fa-magic', 'fa-magnet',
-                        'fa-mail-bulk', 'fa-male', 'fa-map', 'fa-map-marked', 'fa-map-marker',
-                        'fa-map-pin', 'fa-marker', 'fa-mars', 'fa-mars-double', 'fa-mars-stroke',
-                        'fa-mars-stroke-h', 'fa-mars-stroke-v', 'fa-medal', 'fa-medkit', 'fa-meh',
-                        'fa-memory', 'fa-menorah', 'fa-mercury', 'fa-microchip', 'fa-microphone',
-                        'fa-microphone-alt', 'fa-microphone-slash', 'fa-microscope', 'fa-minus', 'fa-minus-circle',
-                        'fa-minus-square', 'fa-mobile', 'fa-mobile-alt', 'fa-money-bill', 'fa-money-bill-alt',
-                        'fa-money-bill-wave', 'fa-money-bill-wave-alt', 'fa-money-check', 'fa-money-check-alt', 'fa-monument',
-                        'fa-moon', 'fa-mortar-pestle', 'fa-mosque', 'fa-motorcycle', 'fa-mountain',
-                        'fa-mouse-pointer', 'fa-music', 'fa-network-wired', 'fa-neuter', 'fa-newspaper',
-                        'fa-not-equal', 'fa-notes-medical', 'fa-object-group', 'fa-object-ungroup', 'fa-oil-can',
-                        'fa-om', 'fa-otter', 'fa-outdent', 'fa-paint-brush', 'fa-paint-roller',
-                        'fa-palette', 'fa-pallet', 'fa-paper-plane', 'fa-paperclip', 'fa-parachute-box',
-                        'fa-paragraph', 'fa-parking', 'fa-passport', 'fa-pastafarianism', 'fa-paste',
-                        'fa-pause', 'fa-paw', 'fa-peace', 'fa-pen', 'fa-pen-alt',
-                        'fa-pen-fancy', 'fa-pen-nib', 'fa-pen-square', 'fa-pencil-alt', 'fa-pencil-ruler',
-                        'fa-people-carry', 'fa-percent', 'fa-percentage', 'fa-phone', 'fa-phone-slash',
-                        'fa-phone-square', 'fa-phone-volume', 'fa-piggy-bank', 'fa-pills', 'fa-place-of-worship',
-                        'fa-plane', 'fa-plane-arrival', 'fa-plane-departure', 'fa-play', 'fa-play-circle',
-                        'fa-plug', 'fa-plus', 'fa-plus-circle', 'fa-plus-square', 'fa-podcast',
-                        'fa-poll', 'fa-poll-h', 'fa-poo', 'fa-poo-storm', 'fa-poop',
-                        'fa-portrait', 'fa-pound-sign', 'fa-power-off', 'fa-pray', 'fa-praying-hands',
-                        'fa-prescription', 'fa-prescription-bottle', 'fa-prescription-bottle-alt', 'fa-print', 'fa-procedures',
-                        'fa-project-diagram', 'fa-puzzle-piece', 'fa-qrcode', 'fa-question', 'fa-question-circle',
-                        'fa-quidditch', 'fa-quote-left', 'fa-quote-right', 'fa-quran', 'fa-radiation',
-                        'fa-radiation-alt', 'fa-rainbow', 'fa-random', 'fa-receipt', 'fa-recycle',
-                        'fa-redo', 'fa-redo-alt', 'fa-registered', 'fa-reply', 'fa-reply-all',
-                        'fa-republican', 'fa-restroom', 'fa-retweet', 'fa-ribbon', 'fa-ring',
-                        'fa-road', 'fa-robot', 'fa-rocket', 'fa-route', 'fa-rss',
-                        'fa-rss-square', 'fa-ruble-sign', 'fa-ruler', 'fa-ruler-combined', 'fa-ruler-horizontal',
-                        'fa-ruler-vertical', 'fa-running', 'fa-rupee-sign', 'fa-sad-cry', 'fa-sad-tear',
-                        'fa-satellite', 'fa-satellite-dish', 'fa-save', 'fa-school', 'fa-screwdriver',
-                        'fa-scroll', 'fa-sd-card', 'fa-search', 'fa-search-dollar', 'fa-search-location',
-                        'fa-search-minus', 'fa-search-plus', 'fa-seedling', 'fa-server', 'fa-shapes',
-                        'fa-share', 'fa-share-alt', 'fa-share-alt-square', 'fa-share-square', 'fa-shekel-sign',
-                        'fa-shield-alt', 'fa-ship', 'fa-shipping-fast', 'fa-shoe-prints', 'fa-shopping-bag',
-                        'fa-shopping-basket', 'fa-shopping-cart', 'fa-shower', 'fa-shuttle-van', 'fa-sign',
-                        'fa-sign-in-alt', 'fa-sign-language', 'fa-sign-out-alt', 'fa-signal', 'fa-signature',
-                        'fa-sim-card', 'fa-sitemap', 'fa-skating', 'fa-skiing', 'fa-skiing-nordic',
-                        'fa-skull', 'fa-skull-crossbones', 'fa-slash', 'fa-sleigh', 'fa-sliders-h',
-                        'fa-smile', 'fa-smile-beam', 'fa-smile-wink', 'fa-smog', 'fa-smoking',
-                        'fa-smoking-ban', 'fa-sms', 'fa-snowboarding', 'fa-snowflake', 'fa-snowman',
-                        'fa-snowplow', 'fa-socks', 'fa-solar-panel', 'fa-sort', 'fa-sort-alpha-down',
-                        'fa-sort-alpha-down-alt', 'fa-sort-alpha-up', 'fa-sort-alpha-up-alt', 'fa-sort-amount-down', 'fa-sort-amount-down-alt',
-                        'fa-sort-amount-up', 'fa-sort-amount-up-alt', 'fa-sort-down', 'fa-sort-numeric-down', 'fa-sort-numeric-down-alt',
-                        'fa-sort-numeric-up', 'fa-sort-numeric-up-alt', 'fa-sort-up', 'fa-spa', 'fa-space-shuttle',
-                        'fa-spell-check', 'fa-spider', 'fa-spinner', 'fa-splotch', 'fa-spray-can',
-                        'fa-square', 'fa-square-full', 'fa-square-root-alt', 'fa-stamp', 'fa-star',
-                        'fa-star-and-crescent', 'fa-star-half', 'fa-star-half-alt', 'fa-star-of-david', 'fa-star-of-life',
-                        'fa-step-backward', 'fa-step-forward', 'fa-stethoscope', 'fa-sticky-note', 'fa-stop',
-                        'fa-stop-circle', 'fa-stopwatch', 'fa-store', 'fa-store-alt', 'fa-stream',
-                        'fa-street-view', 'fa-strikethrough', 'fa-stroopwafel', 'fa-subscript', 'fa-subway',
-                        'fa-suitcase', 'fa-suitcase-rolling', 'fa-sun', 'fa-superscript', 'fa-surprise',
-                        'fa-swatchbook', 'fa-swimmer', 'fa-swimming-pool', 'fa-synagogue', 'fa-sync',
-                        'fa-sync-alt', 'fa-syringe', 'fa-table', 'fa-table-tennis', 'fa-tablet',
-                        'fa-tablet-alt', 'fa-tablets', 'fa-tachometer-alt', 'fa-tag', 'fa-tags',
-                        'fa-tape', 'fa-tasks', 'fa-taxi', 'fa-teeth', 'fa-teeth-open',
-                        'fa-temperature-high', 'fa-temperature-low', 'fa-tenge', 'fa-terminal', 'fa-text-height',
-                        'fa-text-width', 'fa-th', 'fa-th-large', 'fa-th-list', 'fa-theater-masks',
-                        'fa-thermometer', 'fa-thermometer-empty', 'fa-thermometer-full', 'fa-thermometer-half', 'fa-thermometer-quarter',
-                        'fa-thermometer-three-quarters', 'fa-thumbs-down', 'fa-thumbs-up', 'fa-thumbtack', 'fa-ticket-alt',
-                        'fa-times', 'fa-times-circle', 'fa-tint', 'fa-tint-slash', 'fa-tired',
-                        'fa-toggle-off', 'fa-toggle-on', 'fa-toilet', 'fa-toilet-paper', 'fa-toolbox',
-                        'fa-tools', 'fa-tooth', 'fa-torah', 'fa-torii-gate', 'fa-tractor',
-                        'fa-trademark', 'fa-traffic-light', 'fa-train', 'fa-tram', 'fa-transgender',
-                        'fa-transgender-alt', 'fa-trash', 'fa-trash-alt', 'fa-trash-restore', 'fa-trash-restore-alt',
-                        'fa-tree', 'fa-trophy', 'fa-truck', 'fa-truck-loading', 'fa-truck-monster',
-                        'fa-truck-moving', 'fa-truck-pickup', 'fa-tshirt', 'fa-tty', 'fa-tv',
-                        'fa-umbrella', 'fa-umbrella-beach', 'fa-underline', 'fa-undo', 'fa-undo-alt',
-                        'fa-universal-access', 'fa-university', 'fa-unlink', 'fa-unlock', 'fa-unlock-alt',
-                        'fa-upload', 'fa-user', 'fa-user-alt', 'fa-user-alt-slash', 'fa-user-astronaut',
-                        'fa-user-check', 'fa-user-circle', 'fa-user-clock', 'fa-user-cog', 'fa-user-edit',
-                        'fa-user-friends', 'fa-user-graduate', 'fa-user-injured', 'fa-user-lock', 'fa-user-md',
-                        'fa-user-minus', 'fa-user-ninja', 'fa-user-nurse', 'fa-user-plus', 'fa-user-secret',
-                        'fa-user-shield', 'fa-user-slash', 'fa-user-tag', 'fa-user-tie', 'fa-user-times',
-                    ];
-                    foreach ($icons as $icon) {
-                        echo '<div class="col-3 text-center mb-3">';
-                        echo '<i class="fas ' . $icon . ' icon-select" style="font-size: 2rem; cursor: pointer;" data-icon="' . $icon . '"></i>';
-                        echo '</div>';
+                    foreach ($iconCategories as $category => $icons) {
+                        foreach ($icons as $icon) {
+                            echo '<div class="col-3 text-center mb-3 icon-item" data-category="' . $category . '">';
+                            echo '<i class="fas ' . $icon . ' icon-select" style="font-size: 2rem; cursor: pointer;" data-icon="' . $icon . '"></i>';
+                            echo '</div>';
+                        }
                     }
+                    
                     ?>
                 </div>
             </div>
@@ -219,48 +302,120 @@ if (isset($_POST['update'])) {
 <!-- Live Preview Section -->
 <section class="py-5 bg-light">
     <div class="container">
-        <h2 class="fw-bold text-center mb-5" id="preview-header"><?= $s_header; ?></h2>
-        <p class="lead text-center mb-5" id="preview-sub-header"><?= $s_sub_header; ?></p>
+        <h2 class="fw-bold text-center mb-5" id="preview-header"><?= $s_header ?: 'Default Header'; ?></h2>
+        <p class="lead text-center mb-5" id="preview-sub-header"><?= $s_sub_header ?: 'Default Subheader'; ?></p>
 
         <div class="row g-4">
-            <div class="col-md-3 col-sm-6" data-aos="fade-up">
-                <div class="card h-100 border-0 shadow-sm hover-card">
-                    <div class="card-body text-center">
-                        <i class="fas <?= $s_icon; ?> feature-icon modified-text-primary mb-3" style="font-size: 2.5rem;" id="preview-icon"></i>
-                        <h3 class="h5 card-title" id="preview-title"><?= $s_title; ?></h3>
-                        <p class="card-text small" id="preview-description"><?= $s_description; ?></p>
-                    </div>
-                </div>
-            </div>
+           <?php
+            // Fetch all records from the skills table
+            $sqlFetchAll = "SELECT * FROM skills";
+            $resultFetchAll = mysqli_query($connect, $sqlFetchAll);
+
+             if (mysqli_num_rows($resultFetchAll) > 0) {
+                while ($row = mysqli_fetch_assoc($resultFetchAll)) {
+                    if ($row['id'] == 34) {
+                        continue; // Skip rendering the card with ID 34
+                    }
+                    $id = $row['id'];
+                    $icon = $row['icon'];
+                    $title = $row['title'];
+                    $description = $row['description'];
+                    echo '<div class="col-md-3 col-sm-6" data-aos="fade-up">';
+                    echo '    <div class="card h-100 border-0 shadow-sm hover-card">';
+                    echo '        <div class="card-body text-center">';
+                    echo '            <i class="fas ' . $icon . ' feature-icon modified-text-primary mb-3" style="font-size: 2.5rem;"></i>';
+                    echo '            <h3 class="h5 card-title">' . $title . '</h3>';
+                    echo '            <p class="card-text small">' . $description . '</p>';
+                    echo '            <form method="post" action="" class="delete-skill-form">';
+                    echo '                <input type="hidden" name="delete_id" value="' . $id . '">';
+                    echo '                <button type="submit" class="btn btn-danger btn-sm">Delete</button>';
+                    echo '            </form>';
+                    echo '        </div>';
+                    echo '    </div>';
+                    echo '</div>';
+                }
+            } else {
+                echo '<p class="text-center">No skills added yet.</p>';
+            }
+            ?>
         </div>
     </div>
 </section>
 
 <script>
-function updatePreview() {
-    document.getElementById('preview-header').innerText = document.getElementById('header').value;
-    document.getElementById('preview-sub-header').innerText = document.getElementById('subtitle').value;
-    document.getElementById('preview-title').innerText = document.getElementById('title').value;
-    document.getElementById('preview-description').innerText = document.getElementById('description').value;
-    document.getElementById('preview-icon').className = 'fas ' + document.getElementById('icon').value + ' feature-icon modified-text-primary mb-3';
-}
+document.addEventListener('DOMContentLoaded', function() {
+    function updatePreview() {
+        const header = document.getElementById('header');
+        const subHeader = document.getElementById('sub_header');
+        const title = document.getElementById('title');
+        const description = document.getElementById('description');
+        const icon = document.getElementById('icon');
+        const previewHeader = document.getElementById('preview-header');
+        const previewSubHeader = document.getElementById('preview-sub-header');
+        const previewTitle = document.getElementById('preview-title');
+        const previewDescription = document.getElementById('preview-description');
+        const previewIcon = document.getElementById('preview-icon');
 
-// Add event listeners to form fields for real-time updates
-document.getElementById('header').addEventListener('input', updatePreview);
-document.getElementById('subtitle').addEventListener('input', updatePreview);
-document.getElementById('title').addEventListener('input', updatePreview);
-document.getElementById('description').addEventListener('input', updatePreview);
-document.getElementById('icon').addEventListener('input', updatePreview);
+        if (header && previewHeader) {
+            previewHeader.innerText = header.value;
+        }
+        if (subHeader && previewSubHeader) {
+            previewSubHeader.innerText = subHeader.value;
+        }
+        if (title && previewTitle) {
+            previewTitle.innerText = title.value;
+        }
+        if (description && previewDescription) {
+            previewDescription.innerText = description.value;
+        }
+        if (icon && previewIcon) {
+            previewIcon.className = 'fas ' + icon.value + ' feature-icon modified-text-primary mb-3';
+        }
+    }
 
-// Handle icon selection
-document.querySelectorAll('.icon-select').forEach(function(icon) {
-    icon.addEventListener('click', function() {
-        const selectedIcon = this.getAttribute('data-icon');
-        document.getElementById('icon').value = selectedIcon;
-        updatePreview();
-        // Close the modal
-        var modal = bootstrap.Modal.getInstance(document.getElementById('iconModal'));
-        modal.hide();
+    // Add event listeners to form fields for real-time updates
+    document.getElementById('header').addEventListener('input', updatePreview);
+    document.getElementById('sub_header').addEventListener('input', updatePreview);
+    document.getElementById('title').addEventListener('input', updatePreview);
+    document.getElementById('description').addEventListener('input', updatePreview);
+    document.getElementById('icon').addEventListener('input', updatePreview);
+
+    // Handle icon selection
+    document.querySelectorAll('.icon-select').forEach(function(icon) {
+        icon.addEventListener('click', function() {
+            const selectedIcon = this.getAttribute('data-icon');
+            document.getElementById('icon').value = selectedIcon;
+            updatePreview();
+            // Close the modal
+            var modalElement = document.getElementById('iconModal');
+            var modal = bootstrap.Modal.getInstance(modalElement);
+            if (modal) {
+                modal.hide();
+            }
+        });
+    });
+
+    document.getElementById('iconCategory').addEventListener('change', function() {
+        const selectedCategory = this.value;
+        document.querySelectorAll('.icon-item').forEach(function(item) {
+            if (selectedCategory === 'all' || item.getAttribute('data-category') === selectedCategory) {
+                item.style.display = 'block';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    });
+
+    document.getElementById('iconSearch').addEventListener('input', function() {
+        const searchValue = this.value.toLowerCase();
+        document.querySelectorAll('.icon-item').forEach(function(item) {
+            const iconClass = item.querySelector('.icon-select').getAttribute('data-icon');
+            if (iconClass.toLowerCase().includes(searchValue)) {
+                item.style.display = 'block';
+            } else {
+                item.style.display = 'none';
+            }
+        });
     });
 });
 </script>

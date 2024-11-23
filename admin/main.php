@@ -46,6 +46,21 @@ switch($page){
     case 'edit-skills':
         $filename = '../cms/edit-skills.php';
         break;
+    case 'edit-courses':
+        $filename = '../cms/edit-courses.php';
+        break;
+    case 'edit-cta':
+        $filename = '../cms/edit-cta.php';
+        break;
+    case 'edit-testimonials':
+        $filename = '../cms/edit-testimonials.php';
+        break;
+    case 'edit-faqs':
+        $filename = '../cms/edit-faqs.php';
+        break;
+    case 'edit-footer':
+        $filename = '../cms/edit-footer.php';
+        break;
     
     case 'logout':
         $action = 'Logout';
@@ -68,6 +83,12 @@ $resultProfile = mysqli_query($connect, $sqlProfile);
 $pic = mysqli_fetch_assoc($resultProfile);
 $profilePic = $pic['profile_picture'] ?? 'default.png'; // Set default image if no profile picture exists
 
+
+$sqlHeader = "SELECT * FROM header";
+$resultHeader = mysqli_query($connect, $sqlHeader);
+$header = mysqli_fetch_assoc($resultHeader);
+$logo = $header['logo'];
+
 ?>
 
 <!DOCTYPE html>
@@ -78,7 +99,7 @@ $profilePic = $pic['profile_picture'] ?? 'default.png'; // Set default image if 
     <title>LMS Instructor Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/side-nav.css?v1">
+    <link rel="stylesheet" href="../assets/css/side-nav.css?v2">
     <link rel="stylesheet" href="../assets/css/color.css">
 </head>
 <style>
@@ -100,7 +121,7 @@ $profilePic = $pic['profile_picture'] ?? 'default.png'; // Set default image if 
                 <i class="fas fa-bars"></i>
             </button>
             <a class="navbar-brand">
-                <img src="../assets/images/logo.jpg" alt="Pats Logo" style="height: 60px;">
+                <img src="<?= $logo; ?>" alt="Pats Logo" style="height: 60px;">
             </a>
             <div class="d-flex align-items-center ms-auto">
                 <div class="dropdown">
@@ -110,7 +131,7 @@ $profilePic = $pic['profile_picture'] ?? 'default.png'; // Set default image if 
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
                         <li><span class="dropdown-item-text"><?= $_SESSION['fullname']; ?></span></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#"><i class="fas fa-user-cog"></i> Profile</a></li>
+                        <li><a class="dropdown-item" href="?page=profile"><i class="fas fa-user-cog"></i> Profile</a></li>
                         <li><a class="dropdown-item" href="?page=logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
                     </ul>
                 </div>
@@ -182,7 +203,11 @@ $profilePic = $pic['profile_picture'] ?? 'default.png'; // Set default image if 
                             <a class="dropdown-item" href="?page=edit-header">Edit Header</a>
                             <a class="dropdown-item" href="?page=edit-hero-section">Edit Hero Section</a>
                             <a class="dropdown-item" href="?page=edit-skills">Edit Skills</a>
-                            
+                            <a class="dropdown-item" href="?page=edit-courses">Edit Courses</a>
+                            <a class="dropdown-item" href="?page=edit-cta">Edit CTA</a>
+                            <a class="dropdown-item" href="?page=edit-testimonials">Edit Testimonials</a>
+                            <a class="dropdown-item" href="?page=edit-faqs">Edit FAQS</a>
+                            <a class="dropdown-item" href="?page=edit-footer">Edit Footer</a>
                         </div>
                     </li>
 
@@ -203,6 +228,7 @@ $profilePic = $pic['profile_picture'] ?? 'default.png'; // Set default image if 
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
     <script src="../javascript/index.js"></script>
     <script>
             // JavaScript for adding the 'active' class on click

@@ -21,13 +21,18 @@ $sub_header = $data['sub_header'];
             <?php
             // Reset the result pointer and fetch all records again
             mysqli_data_seek($result, 0);
+            $hasData = false;
             while ($data = mysqli_fetch_assoc($result)) {
+                if ($data['id'] == 34) {
+                    continue; // Skip rendering the card with ID 34
+                }
+                $hasData = true;
                 $title = $data['title'];
                 $description = $data['description'];
                 $icon = $data['icon'];
             ?>
                 <div class="col-md-3 col-sm-6" data-aos="fade-up">
-                    <div class="card h-100 border-0 shadow-sm hover-card">
+                    <div class="card h-100 border-0 shadow-sm hover-card rounded">
                         <div class="card-body text-center">
                             <i class="fas <?= $icon; ?> feature-icon modified-text-primary mb-3" style="font-size: 2.5rem;"></i>
                             <h3 class="h5 card-title"><?= $title; ?></h3>
@@ -37,12 +42,9 @@ $sub_header = $data['sub_header'];
                 </div>
             <?php
             }
-            ?>
-            <?php
-                // no data
-                if (mysqli_num_rows($result) == 0) {
-                    echo '<div class="col-md-12 text-center">No data found</div>';
-                }
+            if (!$hasData) {
+                echo '<div class="col-md-12 text-center">No data found</div>';
+            }
             ?>
         </div>
     </div>

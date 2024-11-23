@@ -18,16 +18,16 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                 <ul class="navbar-nav mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#home" data-section="home">Home</a>
+                        <a class="nav-link active modified-text-primary" href="#home" data-section="home">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#courses" data-section="courses">Courses</a>
+                        <a class="nav-link modified-text-primary" href="#courses" data-section="courses">Courses</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#faqs" data-section="about">About</a>
+                        <a class="nav-link modified-text-primary" href="#faqs" data-section="about">About</a>
                     </li>
                     <li class="nav-item ms-3 login-btn-toggle ">
-                        <a href="../auth/login.php" class="btn btn-primary button-primary px-4">Login</a>
+                        <a href="../auth/login.php" class="btn btn-primary button-primary px-4 rounded">Login</a>
                     </li>
                 </ul> 
             </div>

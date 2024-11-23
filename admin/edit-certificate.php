@@ -116,7 +116,8 @@ function handleFileUpload($inputName, $uploadDir, $defaultPath) {
             </div>
         <?php endif; ?>
 
-        <form method="post" id="templateForm" enctype="multipart/form-data">
+       <div class="scrollable-container">
+         <form method="post" id="templateForm" enctype="multipart/form-data">
             <div class="mb-3">
                 <label for="template_image" class="form-label">Template Image</label>
                 <input type="file" class="form-control" id="template_image" name="template_image" accept="image/png" onchange="updatePreview()">
@@ -134,50 +135,51 @@ function handleFileUpload($inputName, $uploadDir, $defaultPath) {
             </div>
             <div class="mb-3">
                 <label for="student_name_font_size" class="form-label">Student Name Font Size</label>
-                <input type="number" id="student_name_font_size" name="student_name_font_size" step="0.01" value="<?= htmlspecialchars($template['student_name_font_size']); ?>" onchange="updatePreview()">
+                <input class="form-control" type="number" id="student_name_font_size" name="student_name_font_size" step="0.01" value="<?= htmlspecialchars($template['student_name_font_size']); ?>" onchange="updatePreview()">
             </div>
             <div class="mb-3">
                 <label for="student_name_x" class="form-label">Student Name X Position</label>
-                <input type="number" id="student_name_x" name="student_name_x" step="0.01" value="<?= htmlspecialchars($template['student_name_x']); ?>" onchange="updatePreview()">
+                <input  class="form-control" type="number" id="student_name_x" name="student_name_x" step="0.01" value="<?= htmlspecialchars($template['student_name_x']); ?>" onchange="updatePreview()">
             </div>
             <div class="mb-3">
                 <label for="student_name_y" class="form-label">Student Name Y Position</label>
-                <input type="number" id="student_name_y" name="student_name_y" step="0.01" value="<?= htmlspecialchars($template['student_name_y']); ?>" onchange="updatePreview()">
+                <input  class="form-control" type="number" id="student_name_y" name="student_name_y" step="0.01" value="<?= htmlspecialchars($template['student_name_y']); ?>" onchange="updatePreview()">
             </div>
             <div class="mb-3">
                 <label for="course_name_font_size" class="form-label">Course Name Font Size</label>
-                <input type="number" id="course_name_font_size" name="course_name_font_size" step="0.01" value="<?= htmlspecialchars($template['course_name_font_size']); ?>" onchange="updatePreview()">
+                <input  class="form-control" type="number" id="course_name_font_size" name="course_name_font_size" step="0.01" value="<?= htmlspecialchars($template['course_name_font_size']); ?>" onchange="updatePreview()">
             </div>
             <div class="mb-3">
                 <label for="course_name_x" class="form-label">Course Name X Position</label>
-                <input type="number" id="course_name_x" name="course_name_x" step="0.01" value="<?= htmlspecialchars($template['course_name_x']); ?>" onchange="updatePreview()">
+                <input  class="form-control" type="number" id="course_name_x" name="course_name_x" step="0.01" value="<?= htmlspecialchars($template['course_name_x']); ?>" onchange="updatePreview()">
             </div>
             <div class="mb-3">
                 <label for="course_name_y" class="form-label">Course Name Y Position</label>
-                <input type="number" id="course_name_y" name="course_name_y" step="0.01" value="<?= htmlspecialchars($template['course_name_y']); ?>" onchange="updatePreview()">
+                <input  class="form-control" type="number" id="course_name_y" name="course_name_y" step="0.01" value="<?= htmlspecialchars($template['course_name_y']); ?>" onchange="updatePreview()">
             </div>
             <div class="mb-3">
                 <label for="completion_date_font_size" class="form-label">Completion Date Font Size</label>
-                <input type="number" id="completion_date_font_size" name="completion_date_font_size" step="0.01" value="<?= htmlspecialchars($template['completion_date_font_size']); ?>" onchange="updatePreview()">
+                <input  class="form-control" type="number" id="completion_date_font_size" name="completion_date_font_size" step="0.01" value="<?= htmlspecialchars($template['completion_date_font_size']); ?>" onchange="updatePreview()">
             </div>
             <div class="mb-3">
                 <label for="completion_date_x" class="form-label">Completion Date X Position</label>
-                <input type="number" id="completion_date_x" name="completion_date_x" step="0.01" value="<?= htmlspecialchars($template['completion_date_x']); ?>" onchange="updatePreview()">
+                <input  class="form-control" type="number" id="completion_date_x" name="completion_date_x" step="0.01" value="<?= htmlspecialchars($template['completion_date_x']); ?>" onchange="updatePreview()">
             </div>
             <div class="mb-3">
                 <label for="completion_date_y" class="form-label">Completion Date Y Position</label>
-                <input type="number" id="completion_date_y" name="completion_date_y" step="0.01" value="<?= htmlspecialchars($template['completion_date_y']); ?>" onchange="updatePreview()">
+                <input  class="form-control" type="number" id="completion_date_y" name="completion_date_y" step="0.01" value="<?= htmlspecialchars($template['completion_date_y']); ?>" onchange="updatePreview()">
             </div>
             <div class="mb-3">
                 <label for="qr_code_x" class="form-label">QR Code X Position</label>
-                <input type="number" id="qr_code_x" name="qr_code_x" step="0.01" value="<?= htmlspecialchars($template['qr_code_x']); ?>" onchange="updatePreview()">
+                <input  class="form-control" type="number" id="qr_code_x" name="qr_code_x" step="0.01" value="<?= htmlspecialchars($template['qr_code_x']); ?>" onchange="updatePreview()">
             </div>
             <div class="mb-3">
                 <label for="qr_code_y" class="form-label">QR Code Y Position</label>
-                <input type="number" id="qr_code_y" name="qr_code_y" step="0.01" value="<?= htmlspecialchars($template['qr_code_y']); ?>" onchange="updatePreview()">
+                <input  class="form-control" type="number" id="qr_code_y" name="qr_code_y" step="0.01" value="<?= htmlspecialchars($template['qr_code_y']); ?>" onchange="updatePreview()">
             </div>
             <button type="submit" class="btn btn-primary">Save changes</button>
         </form>
+       </div>
     </div>
     <div>
         <!-- Live Preview Section -->
@@ -187,5 +189,12 @@ function handleFileUpload($inputName, $uploadDir, $defaultPath) {
         </div>
     </div>
 </div>
+
+<style>
+.scrollable-container {
+    max-height:100vh; /* Adjust the height as needed */
+    overflow-y: auto;
+}
+</style>
 
 <script src="../assets/js/editCertificate.js"></script>
