@@ -11,7 +11,7 @@
     $userID = $_SESSION['userID'];
 
     // Clean up stale sessions
-    $timeout = 1 * 60; // 1 minute
+    $timeout = 60 * 60; // 1 hour
     $cleanupQuery = "DELETE FROM active_sessions WHERE last_activity < DATE_SUB(NOW(), INTERVAL ? SECOND)";
     $stmtCleanup = mysqli_prepare($connect, $cleanupQuery);
     mysqli_stmt_bind_param($stmtCleanup, "i", $timeout);

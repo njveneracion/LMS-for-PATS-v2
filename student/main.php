@@ -6,7 +6,7 @@ include '../functions/logActivity.php';
 $userID = $_SESSION['userID']; 
 
 
-$timeout = 30 * 60; // 30 minutes
+$timeout = 60 * 60; // 1 hour
 $cleanupQuery = "DELETE FROM active_sessions WHERE last_activity < DATE_SUB(NOW(), INTERVAL ? SECOND)";
 $stmtCleanup = mysqli_prepare($connect, $cleanupQuery);
 mysqli_stmt_bind_param($stmtCleanup, "i", $timeout);

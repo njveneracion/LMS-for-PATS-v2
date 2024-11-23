@@ -240,7 +240,9 @@ $completedCourses = mysqli_fetch_all($resultCompletedCourses, MYSQLI_ASSOC);
                 <form id="profileForm" method="post" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label for="fullname" class="form-label">Full Name</label>
-                        <input type="text" name="fullname" class="form-control" value="TEST">
+                        <input type="text" name="fullname" class="form-control" value="<?php echo
+                        $fullname;
+                        ?>">
                     </div>
                     <div class="mb-3">
                         <label for="profilePic" class="form-label">Profile Picture</label>

@@ -294,7 +294,7 @@ function deleteUser(userId, fullname) {
 }
 
 function viewUser(user) {
-    document.getElementById('viewUserProfilePicture').src = user.profile_picture ? '../assets/userProfilePicture/' + user.profile_picture : '../assets/userProfilePicture/default.jpg';
+    document.getElementById('viewUserProfilePicture').src = user.profile_picture ? '../uploads/profile-pictures/' + user.profile_picture : '../uploads/profile-pictures/default.png';
     document.getElementById('viewUserFullname').textContent = user.fullname;
     document.getElementById('viewUserUsername').textContent = user.username;
     document.getElementById('viewUserEmail').textContent = user.email;

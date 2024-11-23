@@ -35,16 +35,23 @@ $footer_text = $footer_text_result->fetch_assoc();
                 <p><i class="fa-solid fa-phone me-2 modified-text-primary"></i><?php echo $contact_info['phone']; ?></p>
                 <p><i class="fa-solid fa-location-dot me-2 modified-text-primary"></i><?php echo $contact_info['address']; ?></p>
             </div>
-            <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
+            <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
                 <h5 class="text-uppercase fw-bold mb-4 modified-text-primary">Follow Us</h5>
-                <?php while($row = $social_links_result->fetch_assoc()): ?>
-                    <a href="<?php echo $row['url']; ?>" class="me-4 btn btn-primary button-primary rounded"><i class="fab fa-<?php echo strtolower($row['platform']); ?> modified-text-color"></i></a>
-                <?php endwhile; ?>
+                <?php
+                    $sqlFollow = "SELECT platform, url FROM social_links";
+                    $social_links_result = $connect->query($sqlFollow);
+                ?>
+                <?php if ($social_links_result->num_rows > 0): ?>
+                    <?php while($row = $social_links_result->fetch_assoc()): ?>
+                        <a href="<?php echo $row['url']; ?>" class="me-4 btn btn-primary button-primary rounded"><i class="fab fa-<?php echo strtolower($row['platform']); ?> modified-text-color"></i></a>
+                    <?php endwhile; ?>
+                <?php else: ?>
+                    <p>No social links found.</p>
+                <?php endif; ?>
             </div>
         </div>
     </div>
     <div class="text-center p-3 text-white modified-bg-primary">
-         <?php echo $footer_text['content']; ?>
-       
+        <?php echo $footer_text['content']; ?>
     </div>
 </footer>

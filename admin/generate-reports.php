@@ -37,7 +37,7 @@ if ($report_type == 'all_students') {
                       WHERE s.role = 'student' AND e.status = 'completed'
                       ORDER BY s.user_id ASC";
 } elseif ($report_type == 'students_with_certificates') {
-    $student_query = "SELECT s.user_id, s.fullname AS student_name, c.course_name, c.course_code 
+    $student_query = "SELECT DISTINCT s.user_id, s.fullname AS student_name, c.course_name, c.course_code 
                       FROM users s 
                       JOIN enrollments e ON s.user_id = e.user_id 
                       JOIN courses c ON e.course_id = c.course_id 

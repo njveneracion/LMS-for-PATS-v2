@@ -446,16 +446,20 @@ function displayAnnouncements($connect, $courseID) {
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
+            $title = htmlspecialchars($row['title'], ENT_QUOTES, 'UTF-8');
+            $instructor_name = htmlspecialchars($row['instructor_name'], ENT_QUOTES, 'UTF-8');
+            $created_at = date('F j, Y, g:i a', strtotime($row['created_at']));
+            $content = nl2br(htmlspecialchars($row['content'], ENT_QUOTES, 'UTF-8'));
             ?>
             <div class="announcement-item mb-4">
-                <h5><?= htmlspecialchars($row['title']) ?></h5>
+                <h5><?= $title ?></h5>
                 <p class="text-muted">
                     <small>
-                        Posted by <?= htmlspecialchars($row['instructor_name']) ?> 
-                        on <?= date('F j, Y, g:i a', strtotime($row['created_at'])) ?>
+                        Posted by <?= $instructor_name ?> 
+                        on <?= $created_at ?>
                     </small>
                 </p>
-                <p><?= nl2br(htmlspecialchars($row['content'])) ?></p>
+                <p><?= $content ?></p>
             </div>
             <?php
         }
