@@ -1,5 +1,6 @@
 <?php
     include './config/db.php';
+    $theme = json_decode(file_get_contents('./admin/theme.json'), true);
 ?>
 
 <!DOCTYPE html>
@@ -8,12 +9,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LMS PATS</title>
-    <link rel="stylesheet" href="./assets/css/main.css">
+    <link rel="stylesheet" href="./assets/css/main.css?=v2">
     <link rel="stylesheet" href="./assets/css/color.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/7b2ef867fd.js" crossorigin="anonymous"></script>
+    <style>
+        :root {
+            --primary-color: <?= $theme['primaryColor'] ?>;
+            --secondary-color: <?= $theme['secondaryColor'] ?>;
+            --background-color: <?= $theme['backgroundColor'] ?>;
+            --text-color: <?= $theme['textColor'] ?>;
+            --card-bg: #FFF;
+        }
+
+        *{
+            border: none !important;
+        }
+
+
+    </style>
 
 </head>
 <body>

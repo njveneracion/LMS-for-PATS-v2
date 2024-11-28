@@ -251,7 +251,7 @@ $users = $result->fetch_all(MYSQLI_ASSOC);
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-4 text-center mb-3">
-                        <img id="viewUserProfilePicture" src="" alt="Profile Picture"  style="width: 150px; height: 150px; border: 1px solid #0d6efd; border-radius: 50%; object-fit: cover;">
+                        <img id="viewUserProfilePicture" src="" alt="Profile Picture"  style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover;">
                     </div>
                     <div class="col-md-8">
                         <p><strong>Full Name:</strong> <span id="viewUserFullname"></span></p>

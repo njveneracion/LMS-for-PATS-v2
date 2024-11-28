@@ -2,8 +2,15 @@
 include '../config/db.php';
 include '../functions/logActivity.php';
 session_start();
+$theme = json_decode(file_get_contents('../admin/theme.json'), true);
 
 $errorMessage = "";
+
+$sqlLogo = "SELECT * FROM header WHERE id = 1";
+$resultLogo = mysqli_query($connect, $sqlLogo);
+$rowLogo = mysqli_fetch_assoc($resultLogo);
+$logo = $rowLogo['logo'];
+
 
 if (isset($_POST['login'])) {
     $loginInput = $_POST['email'];
@@ -104,11 +111,23 @@ if (isset($_POST['login'])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/7b2ef867fd.js" crossorigin="anonymous"></script>
     <style>
+          :root {
+            --primary-color: <?= $theme['primaryColor'] ?>;
+            --secondary-color: <?= $theme['secondaryColor'] ?>;
+            --background-color: <?= $theme['backgroundColor'] ?>;
+            --text-color: <?= $theme['textColor'] ?>;
+            --card-bg: #FFF;
+        }
         body, html {
             height: 100%; /* Full height */
             margin: 0;
             display: flex;
             flex-direction: column;
+        }
+
+         .button-outline-primary {
+            color: var(--primary-color) !important;
+            border: 1px solid var(--primary-color) !important;
         }
         .content {
             flex: 1 0 auto; /* Makes the content area flexible and growable */
@@ -127,14 +146,35 @@ if (isset($_POST['login'])) {
             font-size: 0.875em;
             margin-top: 0.25rem;
         }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+
+        .btn-outline-primary {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn-outline-primary:hover {
+            color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
     </style>
+    
 </head>
 <body>
     <!-- Content Area -->
     <div class="content container mt-3">
         <div class="card p-3">
             <div class="mb-5 d-flex justify-content-center">
-                <a href="../index.php"><img src="../assets/images/logo.jpg" alt="logo of pats" height="160"></a>
+                <a href="../index.php"><img src="<?= $logo ?>" alt="logo of pats" height="200" width="200" style="object-fit: cover;"></a>
             </div>
             <div>
                 <form method="POST" id="loginForm">

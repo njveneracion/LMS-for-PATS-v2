@@ -1,6 +1,7 @@
 <?php
 require '../config/db.php';
 session_start();
+$theme = json_decode(file_get_contents('../admin/theme.json'), true);
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -156,7 +157,6 @@ if (isset($_POST['changePasswordBtn'])) {
     header('Location: forgotPassword.php?step=reset_password');
     exit();
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -169,6 +169,22 @@ if (isset($_POST['changePasswordBtn'])) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>Reset Password</title>
     <style>
+         :root {
+            --primary-color: <?= $theme['primaryColor'] ?>;
+            --secondary-color: <?= $theme['secondaryColor'] ?>;
+            --background-color: <?= $theme['backgroundColor'] ?>;
+            --text-color: <?= $theme['textColor'] ?>;
+        }
+
+        .button-primary {
+            background-color: var(--primary-color);
+        }
+
+        .button-outline-primary {
+            color: var(--primary-color) !important;
+            border: 1px solid var(--primary-color) !important;
+        }
+
         * { border-radius: 0 !important; }
         .container { max-width: 500px; }
         .error-message {

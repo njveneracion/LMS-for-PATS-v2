@@ -1,5 +1,4 @@
 <?php
-
 // Query to get count of active users
 $activeUsersQuery = "SELECT 
                         SUM(CASE WHEN u.role = 'student' THEN 1 ELSE 0 END) AS active_students,
@@ -83,9 +82,9 @@ mysqli_close($connect);
 
 <style>
     body {
-        font-family: 'Inter', sans-serif;
-        background-color: var(--background);
-        color: var(--text-primary);
+        font-family: 'Poppins', sans-serif;
+        background-color: var(--background-color);
+        color: var(--text-color);
     }
 
     .dashboard-card {
@@ -93,7 +92,7 @@ mysqli_close($connect);
         border-radius: 16px;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
         transition: all 0.3s ease;
-        background: var(--card-bg);
+        background: var(--sidebar-color);
         overflow: hidden;
     }
 
@@ -105,7 +104,7 @@ mysqli_close($connect);
     .card-title {
         font-weight: 600;
         font-size: 1.1rem;
-        color: var(--text-primary);
+        color: var(--text-color);
         margin-bottom: 1.5rem;
     }
 
@@ -157,7 +156,7 @@ mysqli_close($connect);
     }
 
     .list-group-item:hover {
-        background-color: rgba(67, 97, 238, 0.05);
+        background-color: rgba(15, 111, 197, 0.05);
     }
 
     .list-group-item strong {
@@ -167,7 +166,7 @@ mysqli_close($connect);
 
     .activity-timestamp {
         font-size: 0.85rem;
-        color: var(--text-secondary);
+        color: var(--text-color);
     }
 
     /* Custom Scrollbar */
@@ -296,8 +295,8 @@ mysqli_close($connect);
             datasets: [{
                 label: 'Number of Students',
                 data: <?php echo json_encode(array_column($studentDistributionData, 'student_count')); ?>,
-                backgroundColor: 'rgba(15, 111, 197, 0.8)',
-                borderColor: 'rgba(15, 111, 197, 1)',
+                backgroundColor: ' rgba(15, 111, 197, 0.8)',
+                borderColor: ' rgba(15, 111, 197, 1)',
                 borderWidth: 1
             }]
         },
@@ -337,8 +336,8 @@ mysqli_close($connect);
             datasets: [{
                 label: 'New Users',
                 data: <?php echo json_encode(array_column($registrationTrendData, 'count')); ?>,
-                borderColor: 'rgba(15, 111, 197, 1)',
-                backgroundColor: 'rgba(15, 111, 197, 0.2)',
+                 borderColor: 'rgba(<?= hexdec(substr($theme['primaryColor'], 1, 2)) ?>, <?= hexdec(substr($theme['primaryColor'], 3, 2)) ?>, <?= hexdec(substr($theme['primaryColor'], 5, 2)) ?>, 1)',
+                    backgroundColor: 'rgba(<?= hexdec(substr($theme['primaryColor'], 1, 2)) ?>, <?= hexdec(substr($theme['primaryColor'], 3, 2)) ?>, <?= hexdec(substr($theme['primaryColor'], 5, 2)) ?>, 0.2)',
                 tension: 0.1,
                 fill: true
             }]
@@ -362,11 +361,11 @@ mysqli_close($connect);
                     <?php echo $activeUsersData['active_instructors']; ?>,
                     <?php echo $usersData['total_students'] + $usersData['total_instructors'] - $activeUsersData['total_active']; ?>
                 ],
-                backgroundColor: [
-                    'rgba(15, 111, 197, 0.8)',
-                    'rgba(54, 162, 235, 0.8)',
-                    'rgba(201, 203, 207, 0.8)'
-                ]
+                 backgroundColor: [
+                        'rgba(<?= hexdec(substr($theme['primaryColor'], 1, 2)) ?>, <?= hexdec(substr($theme['primaryColor'], 3, 2)) ?>, <?= hexdec(substr($theme['primaryColor'], 5, 2)) ?>, 0.8)',
+                        'rgba(54, 162, 235, 0.8)',
+                        'rgba(201, 203, 207, 0.8)'
+                    ]
             }]
         },
         options: {

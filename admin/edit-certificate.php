@@ -99,11 +99,70 @@ function handleFileUpload($inputName, $uploadDir, $defaultPath) {
     }
 }
 ?>
+  <style>
+        :root {
+            --primary-color: <?= $theme['primaryColor'] ?>;
+            --secondary-color: <?= $theme['secondaryColor'] ?>;
+            --background-color: <?= $theme['backgroundColor'] ?>;
+            --text-color: <?= $theme['textColor'] ?>;
+            --card-bg: #FFF;
+        }
 
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: none;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .card-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--text-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+
+        .alert-success {
+            background-color: rgba(<?= hexdec(substr($theme['primaryColor'], 1, 2)) ?>, <?= hexdec(substr($theme['primaryColor'], 3, 2)) ?>, <?= hexdec(substr($theme['primaryColor'], 5, 2)) ?>, 0.2);
+            color: var(--primary-color);
+        }
+
+        .alert-danger {
+            background-color: rgba(<?= hexdec(substr($theme['secondaryColor'], 1, 2)) ?>, <?= hexdec(substr($theme['secondaryColor'], 3, 2)) ?>, <?= hexdec(substr($theme['secondaryColor'], 5, 2)) ?>, 0.2);
+            color: var(--secondary-color);
+        }
+
+        .scrollable-container {
+            max-height: 100vh; /* Adjust the height as needed */
+            overflow-y: auto;
+        }
+
+        .preview-container {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            padding: 20px;
+        }
+    </style>
 <div class="container-fluid mt-4 d-flex gap-5">
     <div class="card p-3">
-        <h2 class="text-primary"><i class="fas fa-edit me-2"></i>Edit Certificate Template</h2>
-
         <?php if (isset($_SESSION['success_message'])): ?>
             <div class="alert alert-success">
                 <?= $_SESSION['success_message']; unset($_SESSION['success_message']); ?>
@@ -122,7 +181,7 @@ function handleFileUpload($inputName, $uploadDir, $defaultPath) {
                 <label for="template_image" class="form-label">Template Image</label>
                 <input type="file" class="form-control" id="template_image" name="template_image" accept="image/png" onchange="updatePreview()">
                 <input type="hidden" name="template_image_path" id="template_image_path" value="<?= htmlspecialchars($template['template_image_path']); ?>">
-                <div class="text text-info">Please upload a PNG file for the template image.</div>
+                <div class="alert alert-warning mt-1">Please upload a PNG file for the template image.</div>
             </div>
             <div class="mb-3">
                 <label for="font_file" class="form-label">Font File</label>

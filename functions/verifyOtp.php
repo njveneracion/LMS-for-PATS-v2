@@ -1,6 +1,8 @@
 <?php
 include '../config/db.php';
 session_start();
+$theme = json_decode(file_get_contents('../admin/theme.json'), true);
+
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -125,6 +127,13 @@ if (isset($_POST['verifyOtpBtn']) || isset($_POST['resendOtpBtn'])) {
     <link rel="stylesheet" href="../assets/css/color.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+
+        :root {
+            --primary-color: <?= $theme['primaryColor'] ?>;
+            --secondary-color: <?= $theme['secondaryColor'] ?>;
+            --background-color: <?= $theme['backgroundColor'] ?>;
+            --text-color: <?= $theme['textColor'] ?>;
+        }
         * { border-radius: 0 !important; /* Removes the border radius */ }
         .container { max-width: 500px; }
         @media (max-width: 576px) {

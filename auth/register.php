@@ -1,5 +1,6 @@
 <?php
 include '../config/db.php';
+$theme = json_decode(file_get_contents('../admin/theme.json'), true);
 
 session_start();
 
@@ -110,6 +111,11 @@ if (isset($_POST['createAccountBtn'])){
     registerUser($connect, $fullname, $username, $email, $password, $role);
 }
 
+$sqlLogo = "SELECT * FROM header WHERE id = 1";
+$resultLogo = mysqli_query($connect, $sqlLogo);
+$rowLogo = mysqli_fetch_assoc($resultLogo);
+$logo = $rowLogo['logo'];
+
 ?>
 
 <!DOCTYPE html>
@@ -125,6 +131,13 @@ if (isset($_POST['createAccountBtn'])){
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/7b2ef867fd.js" crossorigin="anonymous"></script>
     <style>
+            :root {
+            --primary-color: <?= $theme['primaryColor'] ?>;
+            --secondary-color: <?= $theme['secondaryColor'] ?>;
+            --background-color: <?= $theme['backgroundColor'] ?>;
+            --text-color: <?= $theme['textColor'] ?>;
+            --card-bg: #FFF;
+        }
         body, html {
             height: 100%;
             margin: 0;
@@ -157,13 +170,18 @@ if (isset($_POST['createAccountBtn'])){
             font-size: 0.875em;
             margin-top: 0.25rem;
         }
+
+         .button-outline-primary {
+            color: var(--primary-color) !important;
+            border: 1px solid var(--primary-color) !important;
+        }
     </style>
 </head>
 <body>
     <div class="content container mt-3">
         <div class="card">
-            <div class="d-flex justify-content-center">
-                <a href="../index.php"><img src="../assets/images/logo.jpg" alt="logo of pats" height="160"></a>
+            <div class="d-flex justify-content-center mt-3">
+                <a href="../index.php"><img src="<?= $logo ?>" alt="logo of pats" height="200" width="200" style="object-fit: cover;"></a>
             </div>
             <hr>
             <label class="fs-5 mx-3">New Account</label>

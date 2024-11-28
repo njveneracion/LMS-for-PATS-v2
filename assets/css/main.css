@@ -121,10 +121,6 @@ html {
     color: #0f6fc5; /* Bootstrap primary color */
 }
 
-.navbar-nav .nav-link:hover::after,
-.navbar-nav .nav-link.active::after {
-    transform: scaleX(1);
-}
 
 .hover-card {
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;

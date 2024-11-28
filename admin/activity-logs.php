@@ -131,8 +131,8 @@ $connect->close();
             datasets: [{
                 label: 'Number of Users Logged In',
                 data: loginCounts,
-                backgroundColor: 'rgba(15, 111, 197, 0.2)',
-                borderColor: 'rgba(15, 111, 197, 1)',
+                 backgroundColor: 'rgba(<?= hexdec(substr($theme['primaryColor'], 1, 2)) ?>, <?= hexdec(substr($theme['primaryColor'], 3, 2)) ?>, <?= hexdec(substr($theme['primaryColor'], 5, 2)) ?>, 0.2)',
+                borderColor: 'rgba(<?= hexdec(substr($theme['primaryColor'], 1, 2)) ?>, <?= hexdec(substr($theme['primaryColor'], 3, 2)) ?>, <?= hexdec(substr($theme['primaryColor'], 5, 2)) ?>, 1)',
                 borderWidth: 2,
                 fill: true
             }]
