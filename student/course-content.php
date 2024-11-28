@@ -1,4 +1,32 @@
 
+
+<style>
+    <?php
+// Load the theme configuration
+$theme = json_decode(file_get_contents('../admin/theme.json'), true);
+?>
+     :root {
+        --primary-color: <?= $theme['primaryColor'] ?>;
+        --secondary-color: <?= $theme['secondaryColor'] ?>;
+        --background-color: <?= $theme['backgroundColor'] ?>;
+        --text-color: <?= $theme['textColor'] ?>;
+    }
+
+    .bg-primary {
+        background-color: var(--primary-color) !important;
+    }
+
+    .btn-primary {
+        background-color: var(--primary-color) !important;
+        border-color: var(--primary-color) !important;
+    }
+
+    .progress-bar {
+    font-size: 0.9rem;
+    line-height: 25px;
+    background-color: var(--primary-color);
+}
+</style>
 <?php
 include '../functions/generateCertificate.php';
 include 'course-discussions.php';
@@ -22,6 +50,7 @@ if (isset($_GET['viewContent'])) {
         displayCourseContent($connect, $courseID, $studentID, $rowCourses);
     }
 }
+
 
 function handleContentCompletion($connect) {
     $studentID = mysqli_real_escape_string($connect, $_POST['studentID']);
@@ -610,10 +639,7 @@ function displayLearningMaterials($connect, $courseID) {
     height: 25px;
 }
 
-.progress-bar {
-    font-size: 0.9rem;
-    line-height: 25px;
-}
+
 
 .announcement-item {
     background-color: #f8f9fa;

@@ -1,7 +1,7 @@
 
 <?php
 include '../config/db.php';
-
+$theme = json_decode(file_get_contents('../admin/theme.json'), true);
 // Fetch courses for the dropdown (only courses created by the current instructor)
 $coursesQuery = "SELECT course_id, course_name FROM courses WHERE user_id = ?";
 $stmt = mysqli_prepare($connect, $coursesQuery);
@@ -126,8 +126,6 @@ if (isset($_POST['generate_certificate'])) {
             }
             ?>
         </div>
-
-
     </div>
 
     <!-- New section for enrollment status and progress -->
@@ -239,143 +237,143 @@ if (isset($_POST['generate_certificate'])) {
                         // Don't forget to close the prepared statement after the loop
                         mysqli_stmt_close($stmtCertStatus);
                         ?>
-
-                        
                     </tbody>
                 </table>
                 <?php
-            if (isset($_SESSION['certificate_success'])) {
-                echo '<div id="success-alert" class="alert alert-success mt-3 alert-dismissible fade show" role="alert">' . $_SESSION['certificate_success'] . '
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
-                unset($_SESSION['certificate_success']);
-            } 
-            if (isset($_SESSION['certificate_error'])) {
-                echo '<div id="error-alert" class="alert alert-danger mt-3 alert-dismissible fade show" role="alert">' . $_SESSION['certificate_error'] . '
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
-                unset($_SESSION['certificate_error']);
-            }
-            ?>
+                if (isset($_SESSION['certificate_success'])) {
+                    echo '<div id="success-alert" class="alert alert-success mt-3 alert-dismissible fade show" role="alert">' . $_SESSION['certificate_success'] . '
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
+                    unset($_SESSION['certificate_success']);
+                } 
+                if (isset($_SESSION['certificate_error'])) {
+                    echo '<div id="error-alert" class="alert alert-danger mt-3 alert-dismissible fade show" role="alert">' . $_SESSION['certificate_error'] . '
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
+                    unset($_SESSION['certificate_error']);
+                }
+                ?>
             </div>
         </div>
     </div>
 </div>
 
 <style>
-/* CSS for fading out the alert */
-.fade-out {
-    opacity: 0;
-    transition: opacity 0.5s ease-out; /* Adjust timing if needed */
-}
-
-/* CSS to hide the element after fading out */
-.hidden {
-    display: none;
-}
-
-:root {
-    --primary-color: #007bff;
-    --primary-light: #cce5ff;
-    --primary-dark: #0056b3;
-}
-
-.card {
-    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-    border-color: var(--primary-color) !important;
-}
-
-.card-header {
-    background-color: var(--primary-color) !important;
-}
-
-.table th {
-    font-weight: 600;
-}
-
-.table-primary {
-    background-color: var(--primary-light) !important;
-}
-
-.table td {
-    vertical-align: middle;
-}
-
-.btn-success {
-    transition: all 0.2s ease;
-    background-color: var(--primary-color);
-    border-color: var(--primary-color);
-}
-
-.btn-success:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-    background-color: var(--primary-dark);
-    border-color: var(--primary-dark);
-}
-
-.input-group-text {
-    background-color: var(--primary-color) !important;
-    border-color: var(--primary-color) !important;
-}
-
-.progress {
-    height: 20px;
-    background-color: #e9ecef;
-    border-radius: 0.25rem;
-}
-
-.progress-bar {
-    background-color: var(--primary-color);
-    color: white;
-    text-align: center;
-    line-height: 20px;
-    transition: width 0.6s ease;
-}
-
-@media (max-width: 767.98px) {
-    .table-responsive {
-        overflow-x: auto;
+    :root {
+        --primary-color: <?= $theme['primaryColor'] ?>;
+        --secondary-color: <?= $theme['secondaryColor'] ?>;
+        --background-color: <?= $theme['backgroundColor'] ?>;
+        --text-color: <?= $theme['textColor'] ?>;
+        --card-bg: #FFF;
     }
-}
 
-#studentSearch {
-    margin-bottom: 15px;
-}
+    /* CSS for fading out the alert */
+    .fade-out {
+        opacity: 0;
+        transition: opacity 0.5s ease-out; /* Adjust timing if needed */
+    }
 
-/* Add this to your existing styles */
-.certificate-status {
-    display: inline-block;
-    padding: 5px 10px;
-    border-radius: 4px;
-    font-size: 14px;
-    font-weight: bold;
-}
-.certificate-status.generated {
-    background-color: #28a745;
-    color: white;
-}
-.certificate-status.not-generated,
-.certificate-status.not-completed {
-    background-color: #dc3545;
-    color: white;
-}
-.certificate-status i {
-    margin-right: 5px;
-}
+    /* CSS to hide the element after fading out */
+    .hidden {
+        display: none;
+    }
 
-   .btn-primary, .bg-primary {
-        background-color: #0f6fc5 !important;
-        border-color: #0f6fc5 !important;
+    .card {
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        border-color: var(--primary-color) !important;
+    }
+
+    .card-header {
+        background-color: var(--primary-color);
+    }
+
+    .table th {
+        font-weight: 600;
+    }
+
+    .table-primary {
+        background-color: var(--primary-light) !important;
+    }
+
+    .table td {
+        vertical-align: middle;
+    }
+
+    .btn-success {
+        transition: all 0.2s ease;
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+    }
+
+    .btn-success:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        background-color: var(--primary-dark);
+        border-color: var(--primary-dark);
+    }
+
+    .input-group-text {
+        background-color: var(--primary-color) !important;
+        border-color: var(--primary-color) !important;
+    }
+
+    .progress {
+        height: 20px;
+        background-color: #e9ecef;
+        border-radius: 0.25rem;
+    }
+
+    .progress-bar {
+        background-color: var(--primary-color);
+        color: white;
+        text-align: center;
+        line-height: 20px;
+        transition: width 0.6s ease;
+    }
+
+    @media (max-width: 767.98px) {
+        .table-responsive {
+            overflow-x: auto;
+        }
+    }
+
+    #studentSearch {
+        margin-bottom: 15px;
+    }
+
+    /* Add this to your existing styles */
+    .certificate-status {
+        display: inline-block;
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-size: 14px;
+        font-weight: bold;
+    }
+    .certificate-status.generated {
+        background-color: #28a745;
+        color: white;
+    }
+    .certificate-status.not-generated,
+    .certificate-status.not-completed {
+        background-color: #dc3545;
+        color: white;
+    }
+    .certificate-status i {
+        margin-right: 5px;
+    }
+
+    .btn-primary, .bg-primary {
+        background-color: var(--primary-color) !important;
+        border-color: var(--primary-color) !important;
     }
     .btn-outline-primary {
-        color: #0f6fc5 !important;
-        border-color: #0f6fc5 !important;
+        color: var(--primary-color) !important;
+        border-color: var(--primary-color) !important;
     }
     .btn-outline-primary:hover {
-        background-color: #0f6fc5 !important;
+        background-color: var(--primary-color) !important;
         color: #ffffff !important;
     }
     .text-primary {
-        color: #0f6fc5 !important;
+        color: var(--primary-color) !important;
     }
 </style>
 

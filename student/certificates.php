@@ -19,12 +19,19 @@ $stmt = $connect->prepare($sql);
 $stmt->bind_param("i", $studentID);
 $stmt->execute();
 $result = $stmt->get_result();
+$theme = json_decode(file_get_contents('../admin/theme.json'), true);
 ?>
+<style>
+.btn-primary {
+    background-color: <?= $theme["primaryColor"]?> !important;
+    border-color: <?= $theme["primaryColor"]?> !important;
+}
+</style>
 
 <div class="container-fluid mt-4">
     <div class="row mb-4">
         <div class="col">
-            <h2 class="text-primary"><i class="fas fa-certificate me-2"></i>My Certificates</h2>
+            <h2 style="color:<?= $theme["primaryColor"]?>"><i class="fas fa-certificate me-2"></i>My Certificates</h2>
         </div>
     </div>
 
@@ -34,8 +41,8 @@ $result = $stmt->get_result();
                 <div class="col">
                     <div class="card h-100 shadow-sm certificate-card">
                         <div class="card-body d-flex flex-column">
-                            <div class="certificate-icon mb-3">
-                                <i class="fas fa-award fa-3x text-primary"></i>
+                            <div class="certificate-icon mb-3" style="color:<?= $theme["primaryColor"]?>">
+                                <i class="fas fa-award fa-3x  "></i>
                             </div>
                             <h5 class="card-title"><?= htmlspecialchars($row['course_name']) ?></h5>
                             <h6 class="card-subtitle mb-2 text-muted"><?= htmlspecialchars($row['course_code']) ?></h6>

@@ -24,6 +24,190 @@ $sqlRecentProgress = "SELECT sp.*, c.course_name, cm.material_title, q.quiz_name
 $resultRecentProgress = mysqli_query($connect, $sqlRecentProgress);
 ?>
 
+<?php
+// Load the theme configuration
+$theme = json_decode(file_get_contents('../admin/theme.json'), true);
+?>
+<style>
+    :root {
+        --primary-color: <?= $theme['primaryColor'] ?>;
+        --secondary-color: <?= $theme['secondaryColor'] ?>;
+        --background-color: <?= $theme['backgroundColor'] ?>;
+        --text-color: <?= $theme['textColor'] ?>;
+    }
+
+    body {
+        background-color: var(--background-color);
+    }
+
+    .dashboard-container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .welcome-card {
+        background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    }
+
+    .quick-stats {
+        border-left: 4px solid var(--primary-color);
+    }
+
+    .courses {
+        transition: all 0.3s ease;
+    }
+
+    .course-card {
+        transition: all 0.3s ease;
+        border: none;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .course-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .course-image-wrapper {
+        position: relative;
+        height: 200px;
+        overflow: hidden;
+    }
+
+    .course-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .card-title {
+        font-size: 1.1rem;
+        font-weight: bold;
+        color: var(--text-color);
+    }
+
+    .course-desc {
+        font-size: 0.9rem;
+        color: var(--text-color);
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .instructor-name {
+        font-size: 0.85rem;
+    }
+
+    .ended-message {
+        color: #721c24;
+        background-color: #f8d7da;
+        border: 1px solid #f5c6cb;
+        padding: 5px 10px;
+        border-radius: 5px;
+        text-align: center;
+        font-size: 0.85rem;
+    }
+
+    .btn-primary {
+        background-color: var(--primary-color);
+        border: none;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: var(--secondary-color);
+    }
+
+    @media (max-width: 768px) {
+        .course-image-wrapper {
+            height: 180px;
+        }
+    }
+
+    .courses.list-view {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .courses.list-view .course-item {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .courses.list-view .course-card {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .courses.list-view .course-image-wrapper {
+        width: 200px;
+        height: 150px;
+    }
+
+    .courses.list-view .card-body {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem;
+    }
+
+    .courses.list-view .card-title,
+    .courses.list-view .course-desc {
+        margin-bottom: 0;
+    }
+
+    .courses.list-view .course-desc {
+        flex: 1;
+        padding: 0 1rem;
+    }
+
+    @media (max-width: 768px) {
+        .courses.list-view .course-card {
+            flex-direction: column;
+        }
+
+        .courses.list-view .course-image-wrapper {
+            width: 100%;
+            height: 180px;
+        }
+
+        .courses.list-view .card-body {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .courses.list-view .course-desc {
+            padding: 1rem 0;
+        }
+    }
+
+    .text-primary {
+        color: var(--primary-color) !important;
+    }
+
+    .btn-primary {
+        background-color: var(--primary-color) !important;
+        border-color: var(--primary-color) !important;
+    }
+
+    .btn-outline-primary {
+        color: var(--primary-color) !important;
+        border-color: var(--primary-color) !important;
+    }
+
+    .btn-outline-primary:hover {
+        background-color: var(--primary-color) !important;
+        color: var(--background-color) !important;
+    }
+
+    .active {
+        background-color: var(--primary-color) !important;
+        color: var(--background-color) !important;
+    }
+</style>
+
 <div class="container-fluid dashboard-container mt-4">
     <div class="row mb-4">
         <div class="col-lg-8">
@@ -87,6 +271,7 @@ $resultRecentProgress = mysqli_query($connect, $sqlRecentProgress);
         </div>
         <div class="col-lg-6">
             <!-- You can add another card here, e.g., Upcoming Deadlines or Announcements -->
+
         </div>
     </div>
 
@@ -163,154 +348,7 @@ $resultRecentProgress = mysqli_query($connect, $sqlRecentProgress);
     </div>
 </div>
 
-<style>
-body {
-    background-color: #f8f9fa;
-}
 
-.dashboard-container {
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.welcome-card {
-    background: linear-gradient(45deg, #007bff, #0056b3);
-}
-
-.quick-stats {
-    border-left: 4px solid #007bff;
-}
-
-.courses {
-    transition: all 0.3s ease;
-}
-
-.course-card {
-    transition: all 0.3s ease;
-    border: none;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.course-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-}
-
-.course-image-wrapper {
-    position: relative;
-    height: 200px;
-    overflow: hidden;
-}
-
-.course-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.card-title {
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: #333;
-}
-
-.course-desc {
-    font-size: 0.9rem;
-    color: #666;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-
-.instructor-name {
-    font-size: 0.85rem;
-}
-
-.ended-message {
-    color: #721c24;
-    background-color: #f8d7da;
-    border: 1px solid #f5c6cb;
-    padding: 5px 10px;
-    border-radius: 5px;
-    text-align: center;
-    font-size: 0.85rem;
-}
-
-.btn-primary {
-    background-color: #007bff;
-    border: none;
-    transition: background-color 0.3s ease;
-}
-
-.btn-primary:hover {
-    background-color: #0056b3;
-}
-
-@media (max-width: 768px) {
-    .course-image-wrapper {
-        height: 180px;
-    }
-}
-
-.courses.list-view {
-    display: flex;
-    flex-direction: column;
-}
-
-.courses.list-view .course-item {
-    width: 100%;
-    max-width: 100%;
-}
-
-.courses.list-view .course-card {
-    flex-direction: row;
-    align-items: center;
-}
-
-.courses.list-view .course-image-wrapper {
-    width: 200px;
-    height: 150px;
-}
-
-.courses.list-view .card-body {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem;
-}
-
-.courses.list-view .card-title,
-.courses.list-view .course-desc {
-    margin-bottom: 0;
-}
-
-.courses.list-view .course-desc {
-    flex: 1;
-    padding: 0 1rem;
-}
-
-@media (max-width: 768px) {
-    .courses.list-view .course-card {
-        flex-direction: column;
-    }
-
-    .courses.list-view .course-image-wrapper {
-        width: 100%;
-        height: 180px;
-    }
-
-    .courses.list-view .card-body {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .courses.list-view .course-desc {
-        padding: 1rem 0;
-    }
-}
-</style>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {

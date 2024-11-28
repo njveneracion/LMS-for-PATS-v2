@@ -107,20 +107,6 @@ $logo = $header['logo'];
     <link rel="stylesheet" href="../assets/css/color.css">
 </head>
 <style>
-@media (max-width: 767px) and (min-width: 320px) {
-    .navbar-brand{
-        width: 180px;
-        height: 100%;
-    }
-    .navbar-brand img{
-        margin-left: 10px;
-        object-fit: contain;
-    }
-}
-
- * > .nav-link{
-     border-radius: 10px;
-}
   :root {
         --body-color: <?= $theme['backgroundColor'] ?>;
         --sidebar-color: #FFF;
@@ -304,34 +290,7 @@ $logo = $header['logo'];
             }
         }
 
-        @media (max-width: 768px) {
-            .sidebar {
-                margin-left: -250px;
-            }
 
-            .sidebar.active {
-                margin-left: 0;
-            }
-
-            .content {
-                margin-left: 0;
-            }
-
-            #sidebarToggle {
-                margin-left: -15px;
-                margin-right: 10px;
-                color: blue;
-            }
-
-            #sidebarToggle:hover {
-                background-color: #3572EF;
-                color: white;
-            }
-
-            .dropdown button img {
-                margin-right: -40px;
-            }
-        }
 
         .welcome-text {
             background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
@@ -349,7 +308,7 @@ $logo = $header['logo'];
 
         /* Remove border radius from buttons */
         * {
-            border-radius: 0 !important;
+           
             font-family: 'Poppins', sans-serif;
         }
 
@@ -381,46 +340,7 @@ $logo = $header['logo'];
             color: white;
         }
 
-        @media (max-width: 991px) {
-            .navbar-nav .nav-item {
-                text-align: center;
-            }
-
-            .navbar .btn {
-                width: 100%;
-                margin-top: 10px;
-            }
-        }
-
-        @media (max-width: 767px) and (min-width: 320px) {
-            .logo-text {
-                font-size: 7px;
-                margin-right: 20px;
-            }
-
-            .navbar-toggler {
-                border: none;
-            }
-
-            .login-btn-toggle {
-                margin-left: 0 !important;
-            }
-
-            .welcome-text {
-                display: none;
-            }
-
-            .navbar-brand {
-                width: 250px;
-                height: 100%;
-            }
-
-            .navbar-brand img {
-                margin-left: 10px;
-                object-fit: contain;
-            }
-        }
-
+        
         .hero-section {
             background-size: cover;
             background-position: center;

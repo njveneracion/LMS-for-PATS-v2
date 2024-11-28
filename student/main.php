@@ -184,7 +184,7 @@ function checkNewNotifications($connect, $user_id) {
     $resultHeader = mysqli_query($connect, $sqlHeader);
     $header = mysqli_fetch_assoc($resultHeader);
     $logo = $header['logo'];
-
+ $theme = json_decode(file_get_contents('../admin/theme.json'), true);
 ?>
 
 <!DOCTYPE html>
@@ -200,8 +200,8 @@ function checkNewNotifications($connect, $user_id) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
 </head>
+
 <style>
-    
         .btn-primary, .bg-primary {
         background-color: #0f6fc5 !important;
         border-color: #0f6fc5 !important;
@@ -233,6 +233,450 @@ function checkNewNotifications($connect, $user_id) {
                 object-fit: contain;
             }
         }
+@media (max-width: 767px) and (min-width: 320px) {
+            .navbar-brand{
+                width: 180px;
+                height: 100%;
+            }
+            .navbar-brand img{
+                margin-left: 10px;
+                object-fit: contain;
+            }
+        }
+
+ * > .nav-link{
+     border-radius: 10px;
+}
+  :root {
+        --body-color: <?= $theme['backgroundColor'] ?>;
+        --sidebar-color: #FFF;
+        --primary-color: <?= $theme['primaryColor'] ?>;
+        --primary-color-light: #F6F5FF;
+        --toggle-color: #DDD;
+        --text-color: <?= $theme['textColor'] ?>;
+        --background-color: <?= $theme['backgroundColor'] ?>;
+        --secondary-color: <?= $theme['secondaryColor'] ?>;
+        --tran-03: all 0.2s ease;
+        --tran-04: all 0.3s ease;
+        --tran-05: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            padding-top: 80px;
+        }
+
+        /* ===== Sidebar ===== */
+        .sidebar {
+            position: fixed;
+            top: 80px; /* Adjust based on your navbar height */
+            left: 0;
+            bottom: 0;
+            height: 100%;
+            width: 250px;
+            padding: 10px 14px;
+            background: var(--background-color);
+            transition: var(--tran-05);
+            z-index: 100;
+            border-top-right-radius: 5px;
+            overflow-y: auto;
+            box-shadow: 2px 0 4px rgba(0,0,0,0.1);
+        }
+
+        /* ===== Reusable code - Here ===== */
+        .sidebar li {
+            height: 50px;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .header .image, .sidebar .icon {
+            min-width: 60px;
+            border-radius: 6px;
+        }
+
+        .sidebar .icon {
+            min-width: 60px;
+            border-radius: 6px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .sidebar .text, .sidebar .icon {
+            color: var(--text-color);
+            transition: var(--tran-03);
+        }
+
+        .sidebar .text {
+            font-size: 17px;
+            font-weight: 500;
+            white-space: nowrap;
+            opacity: 1;
+        }
+
+        .sidebar.close .text {
+            opacity: 0;
+        }
+
+        .header .image img {
+            width: 60px;
+            border-radius: 6px;
+            margin-right: 20px;
+        }
+
+        .sidebar li a {
+            list-style: none;
+            height: 100%;
+            background-color: transparent;
+            display: flex;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+            text-decoration: none;
+            transition: var(--tran-03);
+        }
+
+        .sidebar li a:hover {
+            background-color: var(--primary-color);
+        }
+
+        .sidebar li a:hover .icon, .sidebar li a:hover .text {
+            color: var(--text-color);
+        }
+
+        .sidebar .menu-bar {
+            height: calc(100% - 55px);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow-y: scroll;
+        }
+
+        .menu-bar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .menu-links {
+            padding: 0;
+            position: relative;
+        }
+
+        .navbar {
+            background-color: var(--background-color);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            height: 80px;
+        }
+
+        .navbar-brand, .nav-link {
+            color: var(--text-color);
+        }
+
+        .sidebar .nav-link a {
+            color: #333;
+            transition: all 0.3s ease;
+            padding: 15px 0px;
+            height: 100%;
+            width: 100%;
+        }
+
+        .sidebar .nav-link.active {
+            background-color: var(--primary-color);
+            border-radius: 10px;
+        }
+
+        .sidebar .nav-link.active a, .sidebar .nav-link.active i, .sidebar .nav-link.active span {
+            color: white !important;
+        }
+
+        .sidebar .nav-link:hover a, .sidebar .nav-link:hover i, .sidebar .nav-link:hover span {
+            color: white !important;
+        }
+
+        .sidebar .nav-link a {
+            color: #333;
+            text-decoration: none;
+        }
+
+        .sidebar .nav-link a:hover {
+            color: white !important;
+            border-radius: 10px;
+        }
+
+        .sidebar.nav-link.active {
+            background-color: var(--background-color);
+        }
+
+        .content {
+            transition: all 0.3s;
+            padding: 20px;
+        }
+
+        .dropdown button img {
+            height: 40px;
+            width: 40px;
+            border: 1px solid var(--primary-color);
+            border-radius: 50%;
+        }
+
+        @media (min-width: 769px) {
+            .content {
+                margin-left: 250px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                margin-left: -250px;
+            }
+
+            .sidebar.active {
+                margin-left: 0;
+            }
+
+            .content {
+                margin-left: 0;
+            }
+
+            #sidebarToggle {
+                margin-left: -15px;
+                margin-right: 10px;
+                color: blue;
+            }
+
+            #sidebarToggle:hover {
+                background-color: #3572EF;
+                color: white;
+            }
+
+            .dropdown button img {
+                margin-right: -40px;
+            }
+        }
+
+        .welcome-text {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: var(--text-color);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .welcome-text:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Remove border radius from buttons */
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        section {
+            padding-top: 80px;
+        }
+
+        .nav-link {
+            color: #6c757d;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .navbar-nav .nav-link.active {
+            color: var(--primary-color);
+            font-weight: bold;
+            transition: all 0.15s ease;
+        }
+
+        .login-btn {
+            border: none;
+            background-color: var(--primary-color);
+            padding: 10px 30px;
+            margin-top: 35px;
+            color: white;
+        }
+
+        @media (max-width: 991px) {
+            .navbar-nav .nav-item {
+                text-align: center;
+            }
+
+            .navbar .btn {
+                width: 100%;
+                margin-top: 10px;
+            }
+        }
+
+        @media (max-width: 767px) and (min-width: 320px) {
+            .logo-text {
+                font-size: 7px;
+                margin-right: 20px;
+            }
+
+            .navbar-toggler {
+                border: none;
+            }
+
+            .login-btn-toggle {
+                margin-left: 0 !important;
+            }
+
+            .welcome-text {
+                display: none;
+            }
+
+            .navbar-brand {
+                width: 250px;
+                height: 100%;
+            }
+
+            .navbar-brand img {
+                margin-left: 10px;
+                object-fit: contain;
+            }
+        }
+
+        .hero-section {
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 230px 0;
+            height: 100vh;
+            display: grid;
+            place-items: center;
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section {
+            background-color: #f8f9fa;
+            padding: 50px 0;
+        }
+
+        html {
+            scroll-padding-top: 70px;
+        }
+
+        .navbar-nav .nav-link {
+            position: relative;
+            color: #000;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-nav .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--primary-color);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover, .navbar-nav .nav-link.active {
+            color: var(--primary-color);
+        }
+
+        .navbar-nav .nav-link:hover::after, .navbar-nav .nav-link.active::after {
+            transform: scaleX(1);
+        }
+
+        .hover-card {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+
+        .hover-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+        }
+
+        .feature-icon {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .hover-card:hover .feature-icon {
+            transform: scale(1.1);
+        }
+
+        .feature-icon-circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50% !important;
+            background-color: #f8f9fa;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .feature-icon-circle i {
+            font-size: 2.5rem;
+        }
+
+        .feature-card:hover .feature-icon-circle {
+            transform: scale(1.1) !important;
+            box-shadow: 0 0 20px rgba(0,0,0,0.15) !important;
+        }
+
+        .feature-card {
+            padding: 20px;
+            border-radius: 10px !important;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            background-color: #ffffff;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .button-primary {
+            background-color: var(--primary-color) !important;
+            color: var(--text-light) !important;
+            transition: all 0.3s ease !important;
+            border: none;
+        }
+
+        .button-primary:hover {
+            background-color: color-mix(in srgb, var(--primary-color) 85%, black) !important;
+        }
+
+        .button-primary:active {
+            background-color: color-mix(in srgb, var(--primary-color) 70%, black) !important;
+            transform: scale(0.98) !important;
+        }
+
+        .button-outline-primary {
+            border: 1px solid var(--primary-color) !important;
+            color: var(--primary-color) !important;
+            transition: all .15s ease !important;
+        }
+
+        .button-outline-primary:hover {
+            background-color: var(--primary-color) !important;
+            color: var(--text-light) !important;
+        }
+
+        .modified-text-primary {
+            color: var(--primary-color) !important;
+        }
+
+        .modified-bg-primary {
+            background-color: var(--primary-color) !important;
+        }
+
 </style>
 <body>
     <nav class="navbar navbar-expand-lg fixed-top">
@@ -287,30 +731,30 @@ function checkNewNotifications($connect, $user_id) {
                 <ul class="menu-links">
                     <li class="nav-link">
                         <a href="?page=dashboard">
-                            <i class="fa-solid fa-graduation-cap icon "></i>
-                            <span class="text nav-text ">Dashboard</span>
+                            <i class="fa-solid fa-graduation-cap icon modified-text-primary"></i>
+                            <span class="text nav-text modified-text-primary">Dashboard</span>
                         </a>
                     </li>
 
                     <li class="nav-link">
                         <a href="?page=my-courses">
-                            <i class="fa-solid fa-clipboard icon "></i>
-                            <span class="text nav-text ">My Courses</span>
+                            <i class="fa-solid fa-clipboard icon modified-text-primary"></i>
+                            <span class="text nav-text modified-text-primary">My Courses</span>
                         </a>
                     </li>
 
                     <li class="nav-link">
                         <a href="?page=certificates">
-                            <i class="fa-solid fa-certificate icon"></i>
-                            <span class="text nav-text">My Certificates</span>
+                            <i class="fa-solid fa-certificate icon modified-text-primary"></i>
+                            <span class="text nav-text modified-text-primary">My Certificates</span>
                         </a>
                     </li>
 
                     
                     <li class="nav-link">
                         <a href="?page=notifications">
-                        <i class="fa-solid fa-envelope  icon"></i>
-                            <span class="text nav-text">Notifications</span>
+                        <i class="fa-solid fa-envelope  icon modified-text-primary"></i>
+                            <span class="text nav-text modified-text-primary">Notifications</span>
                         </a>
                     </li>
 
@@ -318,8 +762,8 @@ function checkNewNotifications($connect, $user_id) {
 
                     <li class="nav-link">
                         <a href="?page=profile">
-                            <i class="fa-solid fa-user icon"></i>
-                            <span class="text nav-text">Profile</span>
+                            <i class="fa-solid fa-user icon modified-text-primary"></i>
+                            <span class="text nav-text modified-text-primary">Profile</span>
                         </a>
                     </li>  
 

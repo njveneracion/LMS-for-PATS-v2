@@ -6,6 +6,8 @@ if (!isset($_SESSION['userID']) || $_SESSION['role'] !== 'instructor') {
     exit();
 }
 
+$theme = json_decode(file_get_contents('../admin/theme.json'), true);
+
 $instructorID = $_SESSION['userID'];
 
 // Fetch courses created by the instructor
@@ -288,8 +290,8 @@ function displayReplies($connect, $parentID, $courseID) {
                 <ul class="list-group">
                     <?php while ($course = $courseResult->fetch_assoc()): ?>
                         <li class="list-group-item">
-                            <a href="?page=discussion&course_id=<?php echo $course['course_id']; ?>">
-                                <i class="fas fa-book-open me-2"></i><?php echo htmlspecialchars($course['course_name']); ?>
+                            <a href="?page=discussion&course_id=<?php echo $course['course_id']; ?>" >
+                                <i class="fas fa-book-open me-2" style="color: <?= $theme['primaryColor']?>"></i><span style="color: <?= $theme['primaryColor']?>"><?php echo htmlspecialchars($course['course_name']); ?></span>
                             </a>
                         </li>
                     <?php endwhile; ?>

@@ -86,12 +86,28 @@ $completedCourses = mysqli_fetch_all($resultCompletedCourses, MYSQLI_ASSOC);
 ?>
 
 <style>
+    :root {
+        --primary-color: <?= $theme['primaryColor'] ?>;
+        --secondary-color: <?= $theme['secondaryColor'] ?>;
+        --background-color: <?= $theme['backgroundColor'] ?>;
+        --text-color: <?= $theme['textColor'] ?>;
+    }
+
+    .bg-primary {
+        background-color: var(--primary-color) !important;
+    }
+
+    .btn-primary {
+        background-color: var(--primary-color) !important;
+        border-color: var(--primary-color) !important;
+    }
+
     .profile-container img {
         border-radius: 50%;
         object-fit: cover;
         height: 200px !important;
         width: 200px !important;
-        border: 5px solid #007bff;
+        border: 5px solid var(--primary-color);
         transition: transform 0.3s ease;
         box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
@@ -118,7 +134,8 @@ $completedCourses = mysqli_fetch_all($resultCompletedCourses, MYSQLI_ASSOC);
         box-shadow: 0 6px 12px rgba(0,0,0,0.15);
     }
     .card-header {
-        background-color: #f8f9fa;
+        background-color: var(--primary-color);
+        color: white;
         border-bottom: none;
         font-weight: bold;
     }
@@ -134,7 +151,7 @@ $completedCourses = mysqli_fetch_all($resultCompletedCourses, MYSQLI_ASSOC);
         border-radius: 5px;
     }
     .progress-bar {
-        background-color: #007bff;
+        background-color: var(--primary-color);
     }
     @media (max-width: 768px) {
         .profile-container {
@@ -240,9 +257,7 @@ $completedCourses = mysqli_fetch_all($resultCompletedCourses, MYSQLI_ASSOC);
                 <form id="profileForm" method="post" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label for="fullname" class="form-label">Full Name</label>
-                        <input type="text" name="fullname" class="form-control" value="<?php echo
-                        $fullname;
-                        ?>">
+                        <input type="text" name="fullname" class="form-control" value="<?php echo $fullname; ?>">
                     </div>
                     <div class="mb-3">
                         <label for="profilePic" class="form-label">Profile Picture</label>

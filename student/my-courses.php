@@ -11,7 +11,19 @@ $sqlEnrolledCourses = "
 
 $resultEnrolledCourses = mysqli_query($connect, $sqlEnrolledCourses);
 ?>
+<style>
+<?php
+    $theme = json_decode(file_get_contents('../admin/theme.json'), true);
+?>
+.btn-primary {
+    background-color: <?= $theme["primaryColor"]?> !important;
+    border-color: <?= $theme["primaryColor"]?> !important;
+}
 
+.text-primary {
+    color: <?= $theme["primaryColor"]?> !important;
+}
+</style>
 <div class="container-fluid card p-3">
     <h2 class="text-center">My Enrolled Courses</h2>
     <hr>

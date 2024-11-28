@@ -357,6 +357,35 @@ if (isset($_GET['viewContent'])) {
     $resultLearningMaterials = mysqli_query($connect, $sqlLearningMaterials);
 
 ?>
+
+<?php
+// Load the theme configuration
+$theme = json_decode(file_get_contents('../admin/theme.json'), true);
+?>
+<style>
+    :root{
+        --primary-color: <?= $theme["primaryColor"]?>;
+        --background-color: <?= $theme["backgroundColor"]?>;
+
+    }
+
+    
+        .btn-primary, .bg-primary {
+            background-color: var(--primary-color) !important;
+            border-color: var(--primary-color) !important;
+        }
+        .btn-outline-primary {
+            color: var(--primary-color) !important;
+            border-color: var(--primary-color) !important;
+        }
+        .btn-outline-primary:hover {
+            background-color: var(--primary-color) !important;
+            color: #fff !important;
+        }
+        .text-primary {
+            color: var(--primary-color) !important;
+        }
+</style>
 <div class="container-fluid px-4">
     <div class="row g-4">
         <div class="col-12">
@@ -910,21 +939,6 @@ function editLearningMaterial(id, title, description, file) {
        }
     }
 
-            .btn-primary, .bg-primary {
-        background-color: #0f6fc5 !important;
-        border-color: #0f6fc5 !important;
-        }
-        .btn-outline-primary {
-            color: #0f6fc5 !important;
-            border-color: #0f6fc5 !important;
-        }
-        .btn-outline-primary:hover {
-            background-color: #0f6fc5 !important;
-            color: #ffffff !important;
-        }
-        .text-primary {
-            color: #0f6fc5 !important;
-        }
 </style>
 
 <script>

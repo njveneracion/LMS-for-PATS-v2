@@ -5,7 +5,7 @@ $resultProfile = mysqli_query($connect, $sqlProfile);
 $userData = mysqli_fetch_assoc($resultProfile);
 $profilePic = $userData['profile_picture'] ?? 'default.png';
 
-
+$theme = json_decode(file_get_contents('../admin/theme.json'), true);
 $refreshPage = false;
 
 if (isset($_POST['updateProfile'])) {
@@ -71,12 +71,13 @@ $activityLogs = mysqli_fetch_all($resultActivityLogs, MYSQLI_ASSOC);
 ?>
 
 <style>
+
     .profile-container img {
         border-radius: 50%;
         object-fit: cover;
         height: 200px !important;
         width: 200px !important;
-        border: 5px solid #0f6fc5;
+        border: 5px solid <?= $theme['primaryColor'] ?>;
         transition: transform 0.3s ease;
         box-shadow: 0 4px 8px rgba(15, 111, 197, 0.2);
     }
@@ -96,17 +97,14 @@ $activityLogs = mysqli_fetch_all($resultActivityLogs, MYSQLI_ASSOC);
         transform: translateY(-5px);
         box-shadow: 0 4px 8px rgba(15, 111, 197, 0.2);
     }
-    .btn-primary, .bg-primary {
-        background-color: #0f6fc5 !important;
-        border-color: #0f6fc5 !important;
+    .btn-primary {
+        background-color: <?= $theme['primaryColor'] ?>;
+        border-color: <?= $theme['primaryColor'] ?>;
     }
-    .btn-outline-primary {
-        color: #0f6fc5 !important;
-        border-color: #0f6fc5 !important;
-    }
-    .btn-outline-primary:hover {
-        background-color: #0f6fc5 !important;
-        color: #ffffff !important;
+
+    .btn-primary:hover {
+        background-color: <?= $theme['primaryColor'] ?>;
+        border-color: <?= $theme['primaryColor'] ?>;
     }
     .text-primary {
         color: #0f6fc5 !important;
