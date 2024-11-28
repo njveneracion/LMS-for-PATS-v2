@@ -326,8 +326,8 @@ function checkNewNotifications($connect, $user_id) {
                     <hr>
                     <div class="container mt-4">
                         <div class="welcome-text">
-                            <h3 id="greeting"></h3>
-                            <p>Welcome to your instructor profile. Here you can manage your personal information and manage the course content.</p>
+                            <h4 id="greeting"></h4>
+                            <p>Welcome to your student profile. Here you can manage your personal information and see the course content.</p>
                         </div>
                     </div>
                 </ul>
@@ -389,7 +389,7 @@ function checkNewNotifications($connect, $user_id) {
                 greeting = "Good evening";
             }
 
-            greetingElement.textContent = greeting + ", <?php echo $_SESSION['fullname']; ?>!";
+            greetingElement.textContent = greeting + ", <?php echo $_SESSION['fullname']; ?>";
         }
 
         setGreeting();
@@ -435,18 +435,6 @@ function checkNewNotifications($connect, $user_id) {
 
     // Initial check when the page loads
     checkNewNotifications();
-    </script>
-    <script>
-        //function autoReload() {
-        //    // Reload the page every 10 seconds
-        //    setTimeout(function() {
-        //        location.reload();
-        //    }, 10000);
-        //}
-//
-        //// Call the function when the page loads
-        //window.onload = autoReload;
-
     </script>
 </body>
 </html>

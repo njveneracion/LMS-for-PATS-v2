@@ -96,7 +96,7 @@ $logo = $header['logo'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LMS Instructor Dashboard</title>
+    <title>Administrator LMS PATS</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/side-nav.css?v2">
@@ -192,22 +192,20 @@ $logo = $header['logo'];
                         </a>
                     </li>
 
-                    
-
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link " role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fa-solid fa-file-alt icon modified-text-primary"></i>
                             <span class="text nav-text modified-text-primary">Edit Landing Page</span>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="?page=edit-header">Edit Header</a>
-                            <a class="dropdown-item" href="?page=edit-hero-section">Edit Hero Section</a>
-                            <a class="dropdown-item" href="?page=edit-skills">Edit Skills</a>
-                            <a class="dropdown-item" href="?page=edit-courses">Edit Courses</a>
-                            <a class="dropdown-item" href="?page=edit-cta">Edit CTA</a>
-                            <a class="dropdown-item" href="?page=edit-testimonials">Edit Testimonials</a>
-                            <a class="dropdown-item" href="?page=edit-faqs">Edit FAQS</a>
-                            <a class="dropdown-item" href="?page=edit-footer">Edit Footer</a>
+                            <a class="dropdown-item" href="?page=edit-header">Header</a>
+                            <a class="dropdown-item" href="?page=edit-hero-section">Hero Section</a>
+                            <a class="dropdown-item" href="?page=edit-skills">Skills</a>
+                            <a class="dropdown-item" href="?page=edit-courses">Courses</a>
+                            <a class="dropdown-item" href="?page=edit-cta">CTA</a>
+                            <a class="dropdown-item" href="?page=edit-testimonials">Testimonials</a>
+                            <a class="dropdown-item" href="?page=edit-faqs">FAQS</a>
+                            <a class="dropdown-item" href="?page=edit-footer">Footer</a>
                         </div>
                     </li>
 
@@ -218,6 +216,7 @@ $logo = $header['logo'];
                             <p>Welcome to your admin profile. Here you can manage system settings and oversee all aspects of the learning management system.</p>
                         </div>
                     </div>
+
                 </ul>
             </div>
         </div>
@@ -321,4 +320,5 @@ $logo = $header['logo'];
     </script>
 </body>
 </html>
+
 

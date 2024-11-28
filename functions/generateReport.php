@@ -8,9 +8,13 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 if (isset($_POST['generate_report'])) {
     $report_type = isset($_POST['report_type']) ? $_POST['report_type'] : 'all_students';
     $course_id = isset($_POST['course_id']) ? $_POST['course_id'] : '';
+    $page = isset($_POST['page']) ? $_POST['page'] : 1;
+    $results_per_page = isset($_POST['results_per_page']) ? $_POST['results_per_page'] : 10;
+
+    $start_from = ($page - 1) * $results_per_page;
 
     if ($report_type == 'all_students') {
-        $query = "SELECT user_id, fullname AS student_name FROM users WHERE role = 'student' ORDER BY user_id ASC";
+        $query = "SELECT user_id, fullname AS student_name FROM users WHERE role = 'student' ORDER BY user_id ASC LIMIT $start_from, $results_per_page";
         $report_title = "All Students";
         $fileName = 'all_students.xlsx';
     } elseif ($report_type == 'enrolled_students') {
@@ -19,7 +23,7 @@ if (isset($_POST['generate_report'])) {
                   JOIN enrollments e ON s.user_id = e.user_id 
                   JOIN courses c ON e.course_id = c.course_id 
                   WHERE s.role = 'student'
-                  ORDER BY s.user_id ASC";
+                  ORDER BY s.user_id ASC LIMIT $start_from, $results_per_page";
         $report_title = "Enrolled Students";
         $fileName = 'enrolled_students.xlsx';
     } elseif ($report_type == 'specific_course') {
@@ -33,7 +37,7 @@ if (isset($_POST['generate_report'])) {
             $query .= " AND c.course_id = '$course_id'";
         }
 
-        $query .= " ORDER BY s.user_id ASC";
+        $query .= " ORDER BY s.user_id ASC LIMIT $start_from, $results_per_page";
         $report_title = "Enrolled Students in Specific Course";
         $fileName = 'enrolled_students_in_specific_course.xlsx';
     } elseif ($report_type == 'completed_courses') {
@@ -42,7 +46,7 @@ if (isset($_POST['generate_report'])) {
                   JOIN enrollments e ON s.user_id = e.user_id 
                   JOIN courses c ON e.course_id = c.course_id 
                   WHERE s.role = 'student' AND e.status = 'completed'
-                  ORDER BY s.user_id ASC";
+                  ORDER BY s.user_id ASC LIMIT $start_from, $results_per_page";
         $report_title = "Students Who Completed Courses";
         $fileName = 'students_who_completed_courses.xlsx';
     } elseif ($report_type == 'students_with_certificates') {
@@ -52,11 +56,11 @@ if (isset($_POST['generate_report'])) {
                   JOIN courses c ON e.course_id = c.course_id 
                   JOIN certificates cert ON s.user_id = cert.student_id 
                   WHERE s.role = 'student'
-                  ORDER BY s.user_id ASC";
+                  ORDER BY s.user_id ASC LIMIT $start_from, $results_per_page";
         $report_title = "Students with Certificates";
         $fileName = 'students_with_certificates.xlsx';
     } elseif ($report_type == 'all_instructors') {
-        $query = "SELECT user_id, fullname AS instructor_name FROM users WHERE role = 'instructor' ORDER BY user_id ASC";
+        $query = "SELECT user_id, fullname AS instructor_name FROM users WHERE role = 'instructor' ORDER BY user_id ASC LIMIT $start_from, $results_per_page";
         $report_title = "All Instructors";
         $fileName = 'all_instructors.xlsx';
     } elseif ($report_type == 'instructors_with_courses') {
@@ -64,7 +68,7 @@ if (isset($_POST['generate_report'])) {
                   FROM users i 
                   JOIN courses c ON i.user_id = c.user_id 
                   WHERE i.role = 'instructor'
-                  ORDER BY i.user_id ASC";
+                  ORDER BY i.user_id ASC LIMIT $start_from, $results_per_page";
         $report_title = "Instructors with Courses";
         $fileName = 'instructors_with_courses.xlsx';
     }
@@ -109,3 +113,4 @@ if (isset($_POST['generate_report'])) {
     $writer->save('php://output');
     exit;
 }
+?>
